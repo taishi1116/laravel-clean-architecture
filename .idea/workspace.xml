@@ -4,7 +4,11 @@
     <list default="true" id="7c74c719-89d6-4fe1-a212-672af9b230e5" name="デフォルト変更リスト" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/php/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/php/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +39,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="php/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -45,8 +49,19 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/src/laravel/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Docker.php/Dockerfile" />
       </list>
     </recent_temporary>
@@ -59,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1620120544374</updated>
-      <workItem from="1620120548938" duration="2924000" />
+      <workItem from="1620120548938" duration="7752000" />
     </task>
     <servers />
   </component>
