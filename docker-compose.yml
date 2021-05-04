@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./src/laravel:/var/www/html
+    ports:
+      - "8000:8000"
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my_conf:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: laravel
