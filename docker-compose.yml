@@ -1,11 +1,29 @@
 version: '3.7'
 
 services:
-  php:
+  next:
+    # コンテナビルド時(立ち上げ時)の情報を記載
+    build:
+      context: ./docker/next
+      # dockerファイルの場所を記載
+      dockerfile: ./Dockerfile
+    # コンテナ名を記載
+    container_name: next
+    # ポート番号を指定
+    ports:
+      - 3000:3000
+    # コンテナを立ち続けるようにする
+    tty: true
+    # 自分の現在のディレクトリをコンテナ内の/app/nextに紐付け
+    volumes:
+      - ./src/client:/usr/src/client
+    # コンテナ立ち上げ時に実行するコマンドを記載(localhostの立ち上げをしている)
+    command: "yarn dev"
+  laravel:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
-    container_name: php
+    container_name: laravel
     volumes:
       - ./src/laravel:/var/www/html
     ports:

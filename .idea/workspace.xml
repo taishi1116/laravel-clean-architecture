@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c74c719-89d6-4fe1-a212-672af9b230e5" name="デフォルト変更リスト" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/next/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/#ib_16384_0.dblwr" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/#ib_16384_0.dblwr" afterDir="false" />
@@ -15,7 +17,7 @@
       <change beforePath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_7.ibt" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_7.ibt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_8.ibt" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_8.ibt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_9.ibt" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/#innodb_temp/temp_9.ibt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/db/data/binlog.000002" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/binlog.000002" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/db/data/binlog.000005" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/binlog.000005" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/binlog.index" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/binlog.index" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/ib_buffer_pool" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/ib_buffer_pool" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/ib_logfile0" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/ib_logfile0" afterDir="false" />
@@ -24,15 +26,6 @@
       <change beforePath="$PROJECT_DIR$/docker/db/data/mysql.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/mysql.ibd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/undo_001" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/undo_001" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/db/data/undo_002" beforeDir="false" afterPath="$PROJECT_DIR$/docker/db/data/undo_002" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/.styleci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/.styleci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/resources/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/resources/js/components/Example.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +95,7 @@
       <workItem from="1620120548938" duration="8030000" />
       <workItem from="1620172496211" duration="5457000" />
       <workItem from="1620201338518" duration="2458000" />
-      <workItem from="1620306444048" duration="579000" />
+      <workItem from="1620306444048" duration="1871000" />
     </task>
     <servers />
   </component>
