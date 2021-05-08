@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c74c719-89d6-4fe1-a212-672af9b230e5" name="デフォルト変更リスト" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/swagger/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/swagger/openapi.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +93,7 @@
       <workItem from="1620172496211" duration="5457000" />
       <workItem from="1620201338518" duration="2458000" />
       <workItem from="1620306444048" duration="1871000" />
-      <workItem from="1620460997727" duration="3110000" />
+      <workItem from="1620460997727" duration="3162000" />
     </task>
     <servers />
   </component>
