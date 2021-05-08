@@ -6,7 +6,7 @@ info:
     laravel学習の掲示板APIです
   termsOfService: 'http://swagger.io/terms/'
   contact:
-    email: shinoda1116.miwa@gmail.com
+    mail: shinoda1116.miwa@gmail.com
 servers:
   - url: https://localhost:3000/api/v1
 paths:
@@ -65,7 +65,7 @@ paths:
             type: string
       responses:
         200:
-          description: aaa
+          description: success
           content:
             application/json:
               schema:
@@ -74,10 +74,118 @@ paths:
                   name:
                     type: string
                     description: ユーザ名
-                  email:
+                  mail:
                     type: string
                     description: メールアドレス
         400:
           description: Bad request
         401:
           description: Authorization information is missing or invalid.
+    put:
+      summary: 会員情報更新API
+      description: >
+        会員情報の更新APIです。
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ユーザ名
+                mail:
+                  type: string
+                  description: メールアドレス
+                password:
+                  type: string
+                  description: メールアドレス
+      responses:
+        204:
+          description: 更新系のためレスポンスなし
+        400:
+          description: Bad request
+  /login:
+    get:
+      summary: ログイン処理API
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+  /logout:
+    get:
+      summary: ログアウト処理API
+      description: >
+        認証技術の選定によって廃止となる可能性あり
+      parameters: []
+      responses:
+        default:
+          description: success
+  /posts:
+    get:
+      summary: 投稿一覧取得API
+      description: >
+        投稿一覧の取得APIです。
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        postTime:
+                          type: string
+    post:
+      summary: 記事の新規投稿API
+      description: >
+        記事の新規投稿APIです。userIdをどのように保持するかが課題
+      parameters: []
+      requestBody:
+        description: 会員登録時のリクエストボディ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        204:
+          description: success
