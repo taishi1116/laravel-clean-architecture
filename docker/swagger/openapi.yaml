@@ -1,55 +1,83 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Swagger Petstore
+  title: 掲示板API
   description: >-
-    A sample API that uses a petstore as an example to demonstrate features in
-    the OpenAPI 3.0 specification
+    laravel学習の掲示板APIです
   termsOfService: 'http://swagger.io/terms/'
   contact:
-    name: Swagger API Team
-    email: apiteam@swagger.io
-    url: 'http://swagger.io'
-  license:
-    name: Apache 2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    email: shinoda1116.miwa@gmail.com
 servers:
-  - url: 'http://petstore.swagger.io/api'
+  - url: https://localhost:3000/api/v1
 paths:
-  /pets:
-    get:
+  /user/pre_register:
+    post:
+      summary: 仮会員登録API
       description: >
-        Returns all pets from the system that the user has access to ...
-      operationId: findPets
-      parameters:
-        - name: tags
-          in: query
-          description: tags to filter by
-          required: false
-          style: form
-          schema:
-            type: array
-            items:
-              type: string
-        - name: limit
-          in: query
-          description: maximum number of results to return
-          required: false
-          schema:
-            type: integer
-            format: int32
+        仮会員登録API。登録完了後メールが送信されます。（auth0導入で無くなる可能性あり）
+      parameters: []
+      requestBody:
+        description: 会員登録時のリクエストボディ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
       responses:
-        '200':
-          description: pet response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
         default:
-          description: unexpected error
+          description: success operation
+  /user/register:
+    post:
+      summary: 会員登録API
+      description: >
+        会員登録API。
+      parameters: []
+      requestBody:
+        description: 会員登録時のリクエストボディ
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                mail:
+                  type: string
+                password:
+                  type: string
+      responses:
+        default:
+          description: success operation
+  /user/{userId}:
+    get:
+      summary: 会員情報取得API
+      description: >
+        会員情報の取得APIです。
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: aaa
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: ユーザ名
+                  email:
+                    type: string
+                    description: メールアドレス
+        400:
+          description: Bad request
+        401:
+          description: Authorization information is missing or invalid.
