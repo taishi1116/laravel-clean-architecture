@@ -63,6 +63,8 @@ paths:
           required: true
           schema:
             type: string
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: success
@@ -80,7 +82,7 @@ paths:
         400:
           description: Bad request
         401:
-          description: Authorization information is missing or invalid.
+          $ref: '#/components/responses/UnauthorizedError'
     put:
       summary: 会員情報更新API
       description: >
@@ -106,13 +108,15 @@ paths:
                 password:
                   type: string
                   description: メールアドレス
+      security:
+        - bearerAuth: []
       responses:
         204:
           description: 更新系のためレスポンスなし
         400:
           description: Bad request
   /login:
-    get:
+    post:
       summary: ログイン処理API
       parameters: []
       requestBody:
@@ -136,7 +140,7 @@ paths:
                   userId:
                     type: string
   /logout:
-    get:
+    post:
       summary: ログアウト処理API
       description: >
         認証技術の選定によって廃止となる可能性あり
@@ -172,7 +176,7 @@ paths:
     post:
       summary: 記事の新規投稿API
       description: >
-        記事の新規投稿APIです。userIdをどのように保持するかが課題
+        記事の新規投稿APIです。
       parameters: []
       requestBody:
         description: 会員登録時のリクエストボディ
@@ -186,6 +190,116 @@ paths:
                   type: string
                 content:
                   type: string
+      security:
+        - bearerAuth: []
       responses:
         204:
           description: success
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /posts/{postId}:
+    get:
+      summary: 特定記事の取得API
+      description: >
+        特定記事の取得を実施するAPIです。
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: 記事タイトル
+                  content:
+                    type: string
+                    description: 記事内容
+                  postTime:
+                    type: string
+                    description: 記事内容
+
+  /posts/{postId}/comment:
+    get:
+      summary: 特定記事のコメント取得API
+      description: >
+        特定記事のコメント取得を実施するAPIです。
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userName:
+                      type: string
+                      description: コメントしてユーザ
+                    comment:
+                      type: string
+                      description: コメント内容
+                    commentTime:
+                      type: string
+                      description: コメント日時
+    post:
+      summary: 特定記事へのコメント送信API
+      description: >
+        特定記事のコメント送信を実施するAPIです。
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        204:
+          description: success
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /month_aggregate:
+    get:
+      summary: 月次投稿数・ユーザー登録数の取得API
+      description: >
+        月次集計結果を取得するAPIです。
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                  post:
+                    type: string
+# componentで再利用可能な部品を作っていく
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+
+
