@@ -1,8 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* inputタグなど押下時の青線削除 */
-body:focus {
-  outline: 0;
-}
