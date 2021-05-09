@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PreRegisterUserTable extends Migration
+class CreatePostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class PreRegisterUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('pre_register_user_table', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('token');
-            $table->string('mail');
-            $table->date('created_at');
+        Schema::create('post', function (Blueprint $table) {
+            $table->uuid('post_id')->primary();
+            $table->string('user_id');
+            $table->string('title');
+            $table->text('content');
+            $table->date('post_time');
         });
-
     }
 
     /**
@@ -29,6 +29,6 @@ class PreRegisterUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pre_register_user_table');
+        Schema::dropIfExists('post');
     }
 }
