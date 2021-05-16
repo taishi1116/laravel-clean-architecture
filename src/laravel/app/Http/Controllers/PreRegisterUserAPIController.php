@@ -16,7 +16,7 @@ class PreRegisterUserAPIController extends Controller
      */
     public function store(Request $request)
     {
-        //リクエストのバリデーション処理
+
         $pre_register_user = new PreRegisterUser();
         $pre_register_user->fill(['mail' => $request->input('mail')]);
         $pre_register_user->save();
