@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7c74c719-89d6-4fe1-a212-672af9b230e5" name="デフォルト変更リスト" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/laravel/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/laravel/app/Http/Controllers/PreRegisterUserAPIController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/app/Http/Controllers/PreRegisterUserAPIController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/laravel/app/Models/PreRegisterUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/app/Models/PreRegisterUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +106,7 @@
       <workItem from="1620306444048" duration="1871000" />
       <workItem from="1620460997727" duration="9937000" />
       <workItem from="1620543792581" duration="446000" />
+      <workItem from="1621344601686" duration="520000" />
     </task>
     <servers />
   </component>
