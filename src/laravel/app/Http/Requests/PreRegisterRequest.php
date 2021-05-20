@@ -26,7 +26,15 @@ class PreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'required','email:rfc,dns' => 'mail',
+            'mail'  => 'required|email',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'mail.required' => 'メールアドレスが入力されていません',
+            'mail.email' => '正しい形式でメールアドレスを入力してください',
         ];
     }
 
