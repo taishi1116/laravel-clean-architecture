@@ -15,8 +15,10 @@ class CreatePreRegisterUserTable extends Migration
     {
         Schema::create('pre_register_user', function (Blueprint $table) {
             $table->id();
-            $table->uuid('token');
+            $table->string('token');
             $table->string('mail');
+            //boolean()ではfalse:0,true:1という扱いになる
+            $table->boolean('is_registered')->default(0);
             $table->date('created_at');
         });
     }

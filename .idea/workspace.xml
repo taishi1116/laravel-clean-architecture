@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/src/laravel/app/Http/Controllers/PreRegisterUserAPIController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/app/Http/Controllers/PreRegisterUserAPIController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/laravel/app/Models/PreRegisterUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/app/Models/PreRegisterUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/laravel/database/migrations/2021_05_09_070035_create_pre_register_user_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/laravel/database/migrations/2021_05_09_070035_create_pre_register_user_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +53,22 @@
     </key>
   </component>
   <component name="RunManager" selected="Docker.docker-compose.yml.swagger-editor: Compose デプロイメント">
+    <configuration default="true" type="SwaggerCodegen">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
+      <option name="jdkPath" value="" />
+      <option name="language" value="java" />
+      <option name="specificationPath" value="$PROJECT_DIR$/docker/swagger/openapi.yaml" />
+      <method v="2" />
+    </configuration>
     <configuration name="docker-compose.yml.swagger-editor: Compose デプロイメント" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>

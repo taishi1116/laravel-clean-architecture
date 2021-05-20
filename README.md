@@ -14,12 +14,13 @@ laravel学習用のリポジトリです。
   - `docker-compose up -d
 - Laravelコンテナ内でマイグレーションの実行し、テーブル作成
   - ` docker exec -it laravel sh `
-
+  - `php artisan serve`
 
 ## API仕様書
 
 - `localhost:8002`にてSwaggerで確認できます
 - 編集時は`docker/swagger/openapi.yaml`を更新してください。
+
 
 ## ER図
 
