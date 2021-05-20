@@ -21,12 +21,24 @@ class PreResisterUserTest extends TestCase
 
     /**
      * 仮会員登録の異常系
-     * メールアドレスのバリデーションに引っかかる
+     * メールアドレスが形式ミスによりバリデーションに引っかかる
      * @param mail メールアドレス
      * @return null
      */
     public function testStoreValidationError(){
         $response = $this->postJson('/api/user/pre_register',['mail' =>'testgmailcom']);
+        $response->assertStatus(400);
+    }
+
+
+    /**
+     * 仮会員登録の異常系
+     * メールアドレスがnullでバリデーションに引っかかる
+     * @param mail メールアドレス
+     * @return null
+     */
+    public function testStoreValidationErrorMailNull(){
+        $response = $this->postJson('/api/user/pre_register');
         $response->assertStatus(400);
     }
 }
