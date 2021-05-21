@@ -32,6 +32,9 @@ class PreRegisterUserAPIController extends Controller
         $pre_register_user->save();
 
         Mail::to($request_mail)->send(new PreRegisterUserMail($register_url));
+        if(count(Mail::failures()) > 0){
+            return response()->json(['message' =>'メールの送信に失敗しました。再度やり直してください。'],400);
+        }
 
         return response()->json([],201);
     }
