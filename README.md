@@ -11,17 +11,37 @@ laravel学習用のリポジトリです。
 ## 環境構築
 
 - `docker-compose.yml`のあるディレクトリで下記コマンド実施
-  - `docker-compose up -d
+  - `docker-compose up -d`
 - Laravelコンテナ内でマイグレーションの実行し、テーブル作成
-  - ` docker exec -it laravel sh `
+  - `docker exec -it laravel bash`
+  - `php artisan migrate`
 
+## フロントエンド
 
-## API仕様書
+フロントエンド実装時に説明追加予定。
+
+## バックエンド
+ 
+### テストについて
+
+- テストファイルの確認は下記コマンドを実行。
+  - 全テスト実行:`./vendor/bin/phpunit` 
+  - テスト実行(ファイル指定):`./vendor/bin/phpunit tests/{Feature|Unit}/{file}`
+    - 実行したいファイルパスに適宜置き換えてください
+
+### DBへの接続方法
+
+- 下記コマンドでmysqlコンテナに入ることができます
+  - `docker exec -it mysql bash`
+- phpmyadminをコンテナで立てているので下記アクセスでも確認できます
+  - `localhost:8050`
+
+### API仕様書
 
 - `localhost:8002`にてSwaggerで確認できます
 - 編集時は`docker/swagger/openapi.yaml`を更新してください。
 
-## ER図
+### ER図
 
 * https://drive.google.com/file/d/1FzI5rkhQ2XojZsG_cOwo_cX9mjNNLa2_/view?usp=sharing
 
