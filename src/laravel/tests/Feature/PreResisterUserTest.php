@@ -13,7 +13,7 @@ class PreResisterUserTest extends TestCase
      * @param mail メールアドレス
      * @return null
      */
-    public function store()
+    public function testStore()
     {
         $response = $this->postJson('/api/user/pre_register',['mail' =>'test@gmail.com']);
         $response->assertStatus(201);
@@ -41,4 +41,6 @@ class PreResisterUserTest extends TestCase
         $response = $this->postJson('/api/user/pre_register');
         $response->assertStatus(400);
     }
+
+
 }
