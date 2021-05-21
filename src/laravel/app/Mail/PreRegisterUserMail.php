@@ -34,7 +34,7 @@ class PreRegisterUserMail extends Mailable
     {
         return $this->from('shinoda@hoge.com')
             ->subject('本登録リンクのお知らせ')
-            ->view('contact.pre_register')
-            ->with(['contact' => $this->register_url]);
+            ->view('mail.pre_register')
+            ->with(['resister_url' => $this->register_url]);
     }
 }
