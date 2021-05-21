@@ -29,14 +29,14 @@ class PreRegisterRequest extends FormRequest
             'mail'  => 'required|email',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'mail.required' => 'メールアドレスが入力されていません',
-            'mail.email' => '正しい形式でメールアドレスを入力してください',
-        ];
-    }
+//
+//    public function messages()
+//    {
+//        return [
+//            'mail.required' => 'メールアドレスが入力されていません',
+//            'mail.email' => '正しい形式でメールアドレスを入力してください',
+//        ];
+//    }
 
     /**
      * バリデーション失敗時のエラーハンドリング
