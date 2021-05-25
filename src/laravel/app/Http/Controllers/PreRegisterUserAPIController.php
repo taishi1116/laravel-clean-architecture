@@ -22,16 +22,16 @@ class PreRegisterUserAPIController extends Controller
      */
     public function store(PreRegisterRequest $request)
     {
-        $request_mail = $request->input('mail');
+        $mail_address = $request->input('mail');
         $token = Str::random(30);
         $register_url = "https://localhost:3000/accounts/register?token=$token";
 
         $pre_register_user = new PreRegisterUser();
         $created_at = Carbon::now('Asia/Tokyo');
-        $pre_register_user->fill(['token' => $token ,'mail' => $request_mail , 'created_at' => $created_at ]);
+        $pre_register_user->fill(['token' => $token ,'mail' => $mail_address , 'created_at' => $created_at ]);
         $pre_register_user->save();
 
-        Mail::to($request_mail)->send(new PreRegisterUserMail($register_url));
+        Mail::to($mail_address)->send(new PreRegisterUserMail($register_url));
         if(count(Mail::failures()) > 0){
             return response()->json(['message' =>'メールの送信に失敗しました。再度やり直してください。'],400);
         }
