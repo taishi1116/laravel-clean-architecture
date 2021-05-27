@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TestAPIController;
+use App\Http\Controllers\PreRegisterUserAPIController;
 
 
 /*
@@ -22,3 +23,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('test', [TestAPIController::class,"index"]);
+Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']);
