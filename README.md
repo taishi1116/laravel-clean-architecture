@@ -31,10 +31,11 @@ laravel学習用のリポジトリです。
 
 ### DBへの接続方法
 
-- 下記コマンドでmysqlコンテナに入ることができます
+- 下記コマンドでmysqlコンテナの接続を実施
   - `docker exec -it mysql bash`
-- phpmyadminをコンテナで立てているので下記アクセスでも確認できます
-  - `localhost:8050`
+  - ` mysql -u root -D laravel -p`
+    - パスワードは`password`
+
 
 ### API仕様書
 
