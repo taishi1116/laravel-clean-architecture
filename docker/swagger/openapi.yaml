@@ -29,7 +29,20 @@ paths:
       responses:
         default:
           description: success operation
-  /user/register:
+  /verify/{token}:
+    get:
+      summary: 仮会員登録のトークンチェックAPI
+      description: >
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: success operation
+  /user:
     post:
       summary: 会員登録API
       description: >
