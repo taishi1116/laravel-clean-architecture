@@ -3,7 +3,7 @@
 namespace App\Repositories\PreRegisterUser;
 
 use App\Models\PreRegisterUser;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use \Exception;
 
 
@@ -12,9 +12,14 @@ class PreRegisterUserRepository implements PreRegisterUserInterface {
     {
         try {
             $currentTime = Carbon::now();
-            $currentTimeBefore24hours =$currentTime->subHours(24);
+            $currentTimeBefore24hours =Carbon::now()->subHours(24);
 
-            $is_valid_token = PreRegisterUser::where('token',$token)->whereBetween('created_at',[$currentTime, $currentTimeBefore24hours]);
+            echo $currentTime;
+            echo $currentTimeBefore24hours;
+
+
+            $is_valid_token = PreRegisterUser::where('token',$token)->whereBetween('created_at',[$currentTimeBefore24hours,$currentTime])->exists();
+
             if(!$is_valid_token){
                 return response()->json(['message' =>'有効な認証情報ではありません。再度仮登録を実施してください'],400);
             }
