@@ -29,7 +29,7 @@ paths:
       responses:
         default:
           description: success operation
-  /user/register:
+  /user:
     post:
       summary: 会員登録API
       description: >
