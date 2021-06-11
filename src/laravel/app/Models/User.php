@@ -36,11 +36,11 @@ class User extends Authenticatable
 
     protected $table = 'user';
     protected $primaryKey = 'user_id';
-    public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
+    public $incrementing = false;
 }
