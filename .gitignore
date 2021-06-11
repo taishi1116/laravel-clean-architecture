@@ -1,9 +1,2 @@
 /docker/db
 
-
-# https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
-
-# User-specific stuff
-.idea/**/workspace.xml
-.idea/**/usage.statistics.xml
-.idea/
