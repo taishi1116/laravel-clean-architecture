@@ -3,13 +3,12 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use \Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class PreRegisterUserRepository implements UserInterface {
+class UserRepository implements UserInterface {
     public function createUser(string $name, string $email, string $password)
     {
         try {
