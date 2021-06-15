@@ -11,3 +11,11 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+
+
+# https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/usage.statistics.xml
