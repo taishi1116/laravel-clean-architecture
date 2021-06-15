@@ -11,11 +11,14 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+
+// TODO リポジトリパターンで書き直す
 class PreRegisterUserAPIController extends Controller
 {
 
     /**
      * 仮会員登録APIのコントローラー
+     * updateOrCreateで初期はシンプルにinsert,token不正後の再登録ではupdateする動きとなっている
      *
      * @param $request
      * @return null
@@ -25,16 +28,13 @@ class PreRegisterUserAPIController extends Controller
     {
         $mail_address = $request->input('mail');
 
-
-        // TODO uuidが適切なのかふめい 
         $token = Str::uuid();
+        $created_at = Carbon::now('Asia/Tokyo');
         $register_url = "https://localhost:3000/accounts/register?token=$token";
 
+
         try {
-            $pre_register_user = new PreRegisterUser();
-            $created_at = Carbon::now('Asia/Tokyo');
-            $pre_register_user->fill(['token' => $token ,'mail' => $mail_address , 'created_at' => $created_at ]);
-            $pre_register_user->save();
+            $pre_register_user = PreRegisterUser::updateOrCreate(['mail' =>$mail_address],['token' => $token,'created_at'=>$created_at]);
         }
         catch(Exception $e){
             response()->json(['message' =>'仮会員登録に失敗しました。再度やり直してください。',400]);
