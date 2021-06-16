@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TestAPIController;
 use App\Http\Controllers\PreRegisterUserAPIController;
+use App\Http\Controllers\VerifyTokenController;
 
 
 /*
@@ -23,4 +24,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('test', [TestAPIController::class,"index"]);
+
+//仮会員登録
 Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']);
+
+// 仮会員登録のtoken確認
+Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
