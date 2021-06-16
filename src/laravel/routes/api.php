@@ -33,7 +33,8 @@ Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']
 Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 
 // 会員情報
-Route::post('user', [UserAPIController::class, 'store']);
-Route::get('user/{user_id}', [UserAPIController::class, 'show']);
-Route::put('user/{user_id}', [UserAPIController::class, 'update']);
-Route::delete('user', [UserAPIController::class, 'store']);
+// TODO tokenによる認証周りはログイン機能を実装してからやる
+Route::post('/user', [UserAPIController::class, 'store']);
+Route::get('/user/{user_id}', [UserAPIController::class, 'show']);
+Route::put('/user/{user_id}', [UserAPIController::class, 'update']);
+Route::delete('/user', [UserAPIController::class, 'store']);
