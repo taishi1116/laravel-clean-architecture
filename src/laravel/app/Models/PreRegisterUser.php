@@ -28,7 +28,7 @@ class PreRegisterUser extends Model
     use HasFactory;
 
     protected $table = 'pre_register_user';
-    protected $fallible = ['token','mail','created_at'];
+    protected $fillable = ['token','mail','created_at'];
 
     // created_atのみ存在するためfalseとする
     public $timestamps = false;
