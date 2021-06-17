@@ -28,8 +28,8 @@ class UserRequest extends FormRequest
         return [
             'name' =>'required',
             'email'  => 'required|email',
-            'password'  => 'required|min8|confirmed',
-            'password_confirmation'  => 'required|min8',
+            'password'  => 'required|min:8|confirmed',
+            'password_confirmation'  => 'required|min:8',
         ];
     }
 

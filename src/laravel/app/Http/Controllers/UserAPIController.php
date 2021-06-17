@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserStoreRequest;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class UserAPIController extends Controller
         $this->user_repository =$user_repository;
     }
 
-    public function store(UserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         $name =$request->input('name');
         $email =$request->input('email');
