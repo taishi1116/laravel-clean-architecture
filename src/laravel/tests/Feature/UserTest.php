@@ -6,7 +6,10 @@ use Database\Seeders\UserSeeder;
 use App\Models\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+
 
 class UserTest extends TestCase
 {
@@ -19,7 +22,11 @@ class UserTest extends TestCase
         parent::setUp();
         // user_idを固定してテストデータを作成する
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
-        $user = User::factory()->create(['user_id' =>$user_id]);
+        // 削除処理済みのUserを作成
+        $deleted_user_id = 'deletedTemporaryUser';
+        
+        User::factory()->create(['user_id' => $user_id]);
+        User::factory()->softDeleted()->create(['user_id' => $deleted_user_id]);
     }
     
     /**
@@ -51,7 +58,6 @@ class UserTest extends TestCase
         $response = $this->postJson('/api/user',
         ['name' =>'篠田 泰志','email' =>'test@example.com','password' =>$password,'password_confirmation' => $password]);
 
-        $response->dump();
         $response->assertStatus(201);
     }
 
@@ -71,13 +77,12 @@ class UserTest extends TestCase
     /**
      * ユーザ情報登録の異常系
      * passwordとpassword_confirmationが一致せずエラー
-     * 
      */
     public function testStoreInvalidPasswordConfirm(){
         $password ='password01';
         $password_confirmation ='dummyPassword';
         $response = $this->postJson('/api/user',
-        ['name' =>'篠田 泰志','password' =>$password,'password_confirmation' => $password_confirmation]);
+        ['name' =>'篠田 泰志','email' =>'test@example.com','password' =>$password,'password_confirmation' => $password_confirmation]);
 
         $response->assertStatus(400);
     }
@@ -112,13 +117,21 @@ class UserTest extends TestCase
      * ユーザ情報削除の正常系
      */
     public function testDestroy(){
+        $user_id = 'fKgSWFm7wNHGWYO3rekV';
+        $response = $this->deleteJson("/api/user/$user_id");
+
+        $response->assertStatus(204);
     }
 
     /**
      * ユーザ情報削除の異常系
-     * deleted_atがすでに更新済みで、削除されている
+     * ユーザーをすでに削除済みで、検索をかけても見つからない
+     * ※論理削除(ソフトデリート)されているものはlaravelの使用上、見つからない形となる
      */
     public function testDestroyInvalidState(){
-
+        $deleted_user_id = 'deletedTemporaryUser';
+        $response = $this->deleteJson("/api/user/$deleted_user_id");
+        // findOrFail()でNot foundとなる
+        $response->assertStatus(404);
     }
 }

@@ -37,4 +37,4 @@ Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 Route::post('/user', [UserAPIController::class, 'store']);
 Route::get('/user/{user_id}', [UserAPIController::class, 'show']);
 Route::put('/user/{user_id}', [UserAPIController::class, 'update']);
-Route::delete('/user', [UserAPIController::class, 'store']);
+Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy']);

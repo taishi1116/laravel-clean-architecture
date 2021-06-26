@@ -27,7 +27,7 @@ class UserAPIController extends Controller
 
     public function show($user_id)
     {
-        $this->user_repository->findUser($user_id);
+        return $this->user_repository->findUser($user_id);
     }
 
     public function update(UserRequest $request, $user_id)

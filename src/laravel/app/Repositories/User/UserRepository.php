@@ -61,7 +61,6 @@ class UserRepository implements UserInterface {
     // 論理削除(ソフトデリート対応)
     public function deleteUser(string $user_id)
     {
-        // findOrFailで見つからなかった場合自動で例外を投げてくれる
         $user = User::findOrFail($user_id);
 
         // 論理削除されているかをチェック
