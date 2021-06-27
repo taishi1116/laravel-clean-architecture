@@ -53,7 +53,7 @@ class UserRepository implements UserInterface {
             
             return response()->json([],204);
         } catch (Exception $e){
-            return response()->json(['message' =>'会員情報の更新に失敗しました。'],500);
+            return response()->json(['message' =>'会員情報の更新に失敗しました。'],400);
         }
 
     }
