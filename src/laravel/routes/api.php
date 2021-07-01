@@ -35,6 +35,6 @@ Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 // 会員情報
 // TODO tokenによる認証周りはログイン機能を実装してからやる
 Route::post('/user', [UserAPIController::class, 'store']);
-Route::get('/user/{user_id}', [UserAPIController::class, 'show']);
-Route::put('/user/{user_id}', [UserAPIController::class, 'update']);
-Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy']);
+Route::get('/user/{user_id}', [UserAPIController::class, 'show'])->middleware('loginUserCheck');
+Route::put('/user/{user_id}', [UserAPIController::class, 'update'])->middleware('loginUserCheck');
+Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy'])->middleware('loginUserCheck');
