@@ -23,7 +23,7 @@ class UserRepository implements UserInterface {
         }
         catch(Exception $e){
             var_dump($e->getMessage());
-            return response()->json(['message' =>'会員登録に失敗しました。再度やり直してください。'],400);
+            return response()->json(['message' =>'会員登録に失敗しました。'],500);
         }
     }
 
@@ -53,7 +53,7 @@ class UserRepository implements UserInterface {
             
             return response()->json([],204);
         } catch (Exception $e){
-            return response()->json(['message' =>'会員情報の更新に失敗しました。'],400);
+            return response()->json(['message' =>'会員情報の更新に失敗しました。'],500);
         }
 
     }

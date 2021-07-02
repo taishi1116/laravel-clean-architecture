@@ -16,7 +16,6 @@ class UserTest extends TestCase
     //テスト実施後は仮データの削除
     use RefreshDatabase;
 
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,7 +33,7 @@ class UserTest extends TestCase
      */
     public function testShow(){
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
-        $response = $this->getJson("/api/user/$user_id");
+        $response = $this->withoutMiddleware()->getJson("/api/user/$user_id");
         $response->assertStatus(200);
     }
 
@@ -44,7 +43,7 @@ class UserTest extends TestCase
      */
     public function testShowInvalidUserId(){
         $user_id = 'dummy_user_id';
-        $response = $this->getJson("/api/user/$user_id");
+        $response = $this->withoutMiddleware()->getJson("/api/user/$user_id");
         $response->assertStatus(404);
     }
 
@@ -76,7 +75,7 @@ class UserTest extends TestCase
 
     /**
      * ユーザ情報登録の異常系
-     * passwordとpassword_confirmationが一致せずエラー
+     * passwordとpassword_confirmationが一致せずフォームリクエストでエラー
      */
     public function testStoreInvalidPasswordConfirm(){
         $password ='password01';
@@ -93,7 +92,7 @@ class UserTest extends TestCase
     public function testUpdate(){
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
         $password ='password01';
-        $response = $this->putJson("/api/user/$user_id",
+        $response = $this->withoutMiddleware()->putJson("/api/user/$user_id",
         ['name' =>'篠田 泰志','email' =>'test@example.com','password' =>$password,'password_confirmation' => $password]);
 
         $response->assertStatus(204);
@@ -107,7 +106,7 @@ class UserTest extends TestCase
     public function testUpdateInValidParam(){
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
         $password ='password01';
-        $response = $this->putJson("/api/user/$user_id",
+        $response = $this->withoutMiddleware()->putJson("/api/user/$user_id",
         ['name' =>'篠田 泰志','password' =>$password,'password_confirmation' => $password]);
 
         $response->assertStatus(400);
@@ -118,7 +117,7 @@ class UserTest extends TestCase
      */
     public function testDestroy(){
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
-        $response = $this->deleteJson("/api/user/$user_id");
+        $response = $this->withoutMiddleware()->deleteJson("/api/user/$user_id");
 
         $response->assertStatus(204);
     }
@@ -130,7 +129,7 @@ class UserTest extends TestCase
      */
     public function testDestroyInvalidState(){
         $deleted_user_id = 'deletedTemporaryUser';
-        $response = $this->deleteJson("/api/user/$deleted_user_id");
+        $response = $this->withoutMiddleware()->deleteJson("/api/user/$deleted_user_id");
         // findOrFail()でNot foundとなる
         $response->assertStatus(404);
     }
