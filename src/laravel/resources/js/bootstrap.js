@@ -8,6 +8,10 @@ window._ = require('lodash');
 
 window.axios = require('axios');
 
+
+// https://readouble.com/laravel/8.x/ja/sanctum.html#spa-authentication
+axios.defaults.withCredentials = true;
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
