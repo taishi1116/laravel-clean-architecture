@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenamePostToPostsTable extends Migration
+class RenamePostToArticlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class RenamePostToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('post', 'posts');
+        Schema::rename('post', 'articles');
     }
 
     /**
@@ -23,6 +23,6 @@ class RenamePostToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::rename('posts', 'post');
+        Schema::rename('articles', 'post');
     }
 }
