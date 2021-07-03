@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Post extends Model
+class Article extends Model
 {
     use HasFactory,SoftDeletes;
 
