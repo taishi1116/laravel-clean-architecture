@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestAPIController;
 use App\Http\Controllers\PreRegisterUserAPIController;
 use App\Http\Controllers\VerifyTokenController;
+use App\Http\Controllers\ArticleController;
 
 
 /*
@@ -30,3 +31,11 @@ Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']
 
 // 仮会員登録のtoken確認
 Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
+
+
+// 記事
+Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{article_id}', [ArticleController::class, 'show']);
+Route::post('/articles', [ArticleController::class, 'store']);
+Route::put('/articles/{article_id}', [ArticleController::class, 'update']);
+Route::delete('/articles/{article_id}', [ArticleController::class, 'destroy']);

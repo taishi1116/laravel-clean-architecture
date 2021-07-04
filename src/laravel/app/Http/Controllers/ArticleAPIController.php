@@ -40,7 +40,7 @@ class ArticleAPIController extends Controller
         $this->article_repository->getArticleDetail($article_id,$title,$content);
     }
     
-    public function delete($article_id)
+    public function destroy($article_id)
     {
         $this->article_repository->getArticleDetail($article_id);
     }
