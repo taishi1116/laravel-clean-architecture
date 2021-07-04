@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestAPIController;
 use App\Http\Controllers\PreRegisterUserAPIController;
 use App\Http\Controllers\VerifyTokenController;
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ArticleAPIController;
 
 
 /*
@@ -34,8 +34,8 @@ Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 
 
 // 記事
-Route::get('/articles', [ArticleController::class, 'index']);
-Route::get('/articles/{article_id}', [ArticleController::class, 'show']);
-Route::post('/articles', [ArticleController::class, 'store']);
-Route::put('/articles/{article_id}', [ArticleController::class, 'update']);
-Route::delete('/articles/{article_id}', [ArticleController::class, 'destroy']);
+Route::get('/articles', [ArticleAPIController::class, 'index']);
+Route::get('/articles/{article_id}', [ArticleAPIController::class, 'show']);
+Route::post('/articles', [ArticleAPIController::class, 'store']);
+Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update']);
+Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy']);

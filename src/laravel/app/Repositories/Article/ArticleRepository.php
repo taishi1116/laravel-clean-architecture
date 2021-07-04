@@ -3,8 +3,8 @@
 namespace App\Repositories\Article;
 
 use App\Models\Article;
-use Illuminate\Support\Carbon;
 use \Exception;
+use Illuminate\Support\Str;
 
 
 class ArticleRepository implements ArticleInterface {
@@ -13,8 +13,8 @@ class ArticleRepository implements ArticleInterface {
         try {
             $response = array();
             foreach (Article::all() as $article) {
-                $extract_article_info = ['title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
-                array_push($response_json,$extract_article_info);
+                $extract_article_info = ['article_id' => $article->title,'title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
+                array_push($response,$extract_article_info);
             }
             
             return response()->json(['articles' => $response],200);
@@ -29,14 +29,15 @@ class ArticleRepository implements ArticleInterface {
         $article = Article::findOrFail($article_id);
 
         $response = ['title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
-        return response()->json(['articles' => $response],200);
+        return response()->json($response,200);
     }
 
     public function postNewArticle(string $user_id,string $title,string $content)
     {
         try {
             $article = new Article();
-            $article->fill(['user_id' => $user_id,'title' => $title,'content' => $content]);
+            $article_id = Str::uuid();
+            $article->fill(['article_id' => $article_id,'user_id' => $user_id,'title' => $title,'content' => $content]);
             $article->save();
             return response()->json(['message'=>'記事の新規投稿が完了しました。'],204);
         }catch(Exception $e){

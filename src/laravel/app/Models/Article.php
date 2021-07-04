@@ -15,5 +15,5 @@ class Article extends Model
     protected $primaryKey = 'article_id';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['user_id','title','content'];
+    protected $fillable = ['article_id','user_id','title','content'];
 }
