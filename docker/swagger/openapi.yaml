@@ -8,15 +8,16 @@ info:
   contact:
     email: shinoda1116.miwa@gmail.com
 servers:
-  - url: https://localhost:3000/api/v1
+  - url: https://localhost:8000/api
 paths:
-  /user/pre_register:
+  /temporary_users/:
     post:
-      summary: 仮会員登録API
+      summary: 仮会員登録
       description: >
-        仮会員登録API。登録完了後メールが送信されます。（auth0導入で無くなる可能性あり）
+        仮会員の登録を実施。仮登録実施後に本登録用リンクがメールに送信されます。
       parameters: []
       requestBody:
+        required: true
         description: 会員登録時のリクエストボディ
         required: true
         content:
@@ -24,15 +25,18 @@ paths:
             schema:
               type: object
               properties:
-                mail:
+                email:
                   type: string
       responses:
-        default:
-          description: success operation
+        201:
+          description: created
   /verify/{token}:
     get:
-      summary: 仮会員登録のトークンチェックAPI
-      description: >
+      summary: 仮会員登録のトークンチェック
+      description: >  
+        メールから本登録用リンクを踏み、画面遷移直後に本APIを叩いてトークンチェックする。
+        ステータスコード200で正常の場合、会員登録画面を見せる。
+        トークンチェックエラーの場合は仮会員登録画面に戻す。
       parameters:
         - name: token
           in: path
@@ -40,13 +44,13 @@ paths:
           schema:
             type: string
       responses:
-        default:
+        200:
           description: success operation
-  /user:
+  /users:
     post:
-      summary: 会員登録API
+      summary: 会員登録
       description: >
-        会員登録API。
+        トークンチェック完了後の会員登録画面で本APIを叩いて、会員登録処理を実施する。
       parameters: []
       requestBody:
         description: 会員登録時のリクエストボディ
@@ -56,20 +60,30 @@ paths:
             schema:
               type: object
               properties:
-                userName:
+                name:
                   type: string
-                mail:
+                  description: ユーザーネーム
+                  example: alchemy
+                email:
                   type: string
+                  description: メールアドレス
+                  example: test@example.com
                 password:
                   type: string
+                  description: パスワード(半角英数字8文字以上)
+                  example: dummyPassword
+                password_confirmation:
+                  type: string
+                  description: パスワード確認
+                  example: dummyPassword
       responses:
-        default:
-          description: success operation
-  /user/{userId}:
+        201:
+          description: created
+  /users/{userId}:
     get:
-      summary: 会員情報取得API
+      summary: 会員情報取得
       description: >
-        会員情報の取得APIです。
+        ユーザの会員情報を取得する。
       parameters:
         - name: userId
           in: path
@@ -88,18 +102,24 @@ paths:
                 properties:
                   name:
                     type: string
-                    description: ユーザ名
-                  mail:
+                    description: ユーザネーム
+                    example: alchemy
+                  email:
                     type: string
                     description: メールアドレス
+                    example: test@example.com
+                  password:
+                    type: string
+                    description: パスワード
+                    example: dummyPassword
         400:
           description: Bad request
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          description: Forbidden
     put:
-      summary: 会員情報更新API
+      summary: 会員情報更新
       description: >
-        会員情報の更新APIです。
+        マイページ画面で会員情報を更新する際に実施。
       parameters:
         - name: userId
           in: path
@@ -107,6 +127,7 @@ paths:
           schema:
             type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -115,33 +136,76 @@ paths:
                 name:
                   type: string
                   description: ユーザ名
-                mail:
+                  example: alchemy
+                email:
                   type: string
                   description: メールアドレス
+                  example: test@example.com
                 password:
                   type: string
-                  description: メールアドレス
+                  description: パスワード(半角英数字8文字以上)
+                  example: dummyPassword
+                password_confirmation:
+                  type: string
+                  description: パスワード確認
+                  example: dummyPassword
       security:
         - bearerAuth: []
       responses:
         204:
-          description: 更新系のためレスポンスなし
+          description: Success(No content)
         400:
           description: Bad request
+        403:
+          description: Forbidden
+    delete:
+      summary: 会員情報削除
+      description: >
+        会員情報の削除(退会)を実施する。※DB的にはソフトデリートのため情報は残る形。
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        204:
+          description: Success(No content)
+        400:
+          description: Bad request
+        500:
+          description: Internal Server Error
+  /sanctum/csrf-cookie:
+    get:
+      summary: 認証の初期化用API
+      description: >
+        認証用のトークン設定API
+        https://readouble.com/laravel/8.x/ja/sanctum.html
+      parameters: []
+      responses:
+        200:
+          description: success
   /login:
     post:
-      summary: ログイン処理API
+      summary: ログイン
       parameters: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                mail:
+                email:
                   type: string
+                  description: メールアドレス
+                  example: test@example.com
                 password:
                   type: string
+                  description: パスワード(半角英数字八文字以上)
+                  example: dummyPassword
       responses:
         200:
           description: success
@@ -154,9 +218,9 @@ paths:
                     type: string
   /logout:
     post:
-      summary: ログアウト処理API
+      summary: ログアウト
       description: >
-        認証技術の選定によって廃止となる可能性あり
+        ログアウト処理を実施します。
       parameters: []
       responses:
         default:
