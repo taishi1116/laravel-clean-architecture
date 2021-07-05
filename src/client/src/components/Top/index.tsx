@@ -45,12 +45,7 @@ export const TopUI = () => {
     <>
       <div className="w-10/12 mx-auto lg:w-2/4">
         <div className="pt-4 mb-4 text-center">
-          <p>自己学習のための掲示板サイトです</p>
-          <p>技術スタックは下記でできています！</p>
-          <ul>
-            <li>Front:Next.js</li>
-            <li>Backend:PHP(今後Laravelになる予定)</li>
-          </ul>
+          <p>Next.js * Laravelによるブログサービス</p>
         </div>
 
         <div className="pt-4 mb-4 text-center">
