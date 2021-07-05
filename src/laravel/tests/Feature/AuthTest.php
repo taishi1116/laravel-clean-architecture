@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
-// use Tests\Feature\User;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -26,8 +24,6 @@ class AuthTest extends TestCase
         $this->password = 'dummyPassword';
         User::factory()->create(['email' => $this->email,'password'=> Hash::make($this->password)]);
     }
-
-   
 
     /**
      * ログインの正常系
