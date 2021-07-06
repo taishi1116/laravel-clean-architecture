@@ -3,36 +3,29 @@ import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
 import { useEffect, useState } from 'react';
 import { getToken } from '../../utils/getToken';
+import { BASE_URL } from '../../utils/constants';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 
-type countType = {
-  month_aggregate: string;
-  user_count: string;
-  post_count: string;
+type MonthAggregate = {
+  users: number;
+  articles: number;
 };
 
 export const TopUI = () => {
   const router = useRouter();
-  const [counts, setCounts] = useState({ monthAggregate: '', user: '', post: '' });
+  const { enqueueSnackbar } = useSnackbar();
+  const [monthAggregate, setMonthAggregate] = useState<MonthAggregate>({ users: 0, articles: 0 });
   const [token, setToken] = useState<string | null>();
 
-  const FETCH_MONTH_AGGREGATE_URL = 'http://localhost:3010/controller/month_aggregate.php';
+  const END_POINT = `${BASE_URL}/month_aggregate`;
 
   const fetchCounts = async () => {
     try {
-      const res = await axios.get(FETCH_MONTH_AGGREGATE_URL);
-      if (res && !res.data.err_code) {
-        const resData: countType = res.data;
-        setCounts({
-          monthAggregate: resData.month_aggregate,
-          user: resData.user_count,
-          post: resData.post_count,
-        });
-      } else {
-        alert(res.data.message);
-      }
+      const res = await axios.get(END_POINT);
+      setMonthAggregate(res.data);
     } catch (e) {
-      alert(e);
+      enqueueSnackbar('月次集計の取得エラー', { variant: 'error' });
     }
   };
 
@@ -49,9 +42,8 @@ export const TopUI = () => {
         </div>
 
         <div className="pt-4 mb-4 text-center">
-          <div>{counts.monthAggregate}</div>
-          <div>登録ユーザー:{counts.user}</div>
-          <div>投稿数：{counts.post}</div>
+          <div>月次登録ユーザー:{monthAggregate.users}</div>
+          <div>月次投稿数：{monthAggregate.articles}</div>
         </div>
 
         <div className="mb-4">
