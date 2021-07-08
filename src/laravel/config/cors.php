@@ -17,9 +17,11 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
+    // 許可するHTTPリクエストメソッドを指定する(GET,POSTなど)
     'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
+    
+    // 通信を許可する送信元originを指定
+    'allowed_origins' => [env('FRONT_URL','http://localhost:3000')],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +31,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // https://readouble.com/laravel/8.x/ja/sanctum.html#spa-authentication
+    'supports_credentials' => true,
 
 ];

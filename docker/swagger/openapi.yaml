@@ -4,7 +4,7 @@ info:
   title: 掲示板API
   description: >-
     laravel学習の掲示板APIです
-  termsOfService: 'http://swagger.io/terms/'
+  termsOfService: "http://swagger.io/terms/"
   contact:
     email: shinoda1116.miwa@gmail.com
 servers:
@@ -95,7 +95,7 @@ paths:
         400:
           description: Bad request
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
     put:
       summary: 会員情報更新API
       description: >
@@ -209,7 +209,7 @@ paths:
         204:
           description: success
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
   /posts/{postId}:
     get:
       summary: 特定記事の取得API
@@ -285,7 +285,7 @@ paths:
         204:
           description: success
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
   /month_aggregate:
     get:
       summary: 月次投稿数・ユーザー登録数の取得API
@@ -307,12 +307,10 @@ paths:
 # componentで再利用可能な部品を作っていく
 components:
   securitySchemes:
-    bearerAuth:            # arbitrary name for the security scheme
+    bearerAuth: # arbitrary name for the security scheme
       type: http
       scheme: bearer
-      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
-
-
