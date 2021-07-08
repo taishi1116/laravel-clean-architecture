@@ -73,7 +73,7 @@ laravel学習用のリポジトリです。
 
 ※  今後`SchemaSpy`に移行予定
 
-## インフラ構成ず
+## インフラ構成図
 
 * https://drive.google.com/file/d/1ypXRYEq2gLgfBhDosyF-B-b270yYl7BE/view?usp=sharing
 ## アプリ要件
