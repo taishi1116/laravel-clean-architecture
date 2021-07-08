@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginUserCheck
 {
     /**
-     * ログインしているIdとユーザIdが一致しているかチェック
-     * 一致していない場合は不正アクセスとなるためエラーを返す
+     * 第三者にIDの有無を判別させないため404エラーとする
      */
     public function handle(Request $request, Closure $next)
     {
@@ -19,7 +18,7 @@ class LoginUserCheck
         $requestId = $request->user_id;
 
         if($loginId != $requestId){
-            return response()->json(['message' =>'アクセス権が存在しません。'],403);
+            return response()->json(['message' =>'ユーザ見つかりませんでした'],404);
         }
 
         return $next($request);

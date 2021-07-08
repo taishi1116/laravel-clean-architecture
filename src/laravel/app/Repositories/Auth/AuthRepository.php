@@ -17,7 +17,7 @@ class AuthRepository implements AuthInterface {
             return response()->json(['message' => 'ログインが完了しました。'], 200);            
         }
 
-        return response()->json(['message' => 'ユーザーが見つかりません。'], 401);
+        return response()->json(['message' => 'ユーザーが見つかりません。'], 404);
     }
 
     public function logout($request){
