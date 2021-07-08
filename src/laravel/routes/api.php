@@ -38,9 +38,9 @@ Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 // 記事
 Route::get('/articles', [ArticleAPIController::class, 'index']);
 Route::get('/articles/{article_id}', [ArticleAPIController::class, 'show']);
-Route::post('/articles', [ArticleAPIController::class, 'store']);
-Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update']);
-Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy']);
+Route::post('/articles', [ArticleAPIController::class, 'store'])->middleware('auth:sanctum','loginUserCheck');;
+Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update'])->middleware('auth:sanctum','loginUserCheck');;
+Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy'])->middleware('auth:sanctum','loginUserCheck');;
 // 認証
 Route::post('/login', [AuthAPIController::class, 'login']);
 Route::post('/logout', [AuthAPIController::class, 'logout']);
