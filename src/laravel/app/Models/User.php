@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 /**
  * App\Models\User
  *
@@ -35,7 +36,6 @@ class User extends Authenticatable
 {
     use HasFactory,Notifiable,SoftDeletes;
 
-    protected $table = 'user';
     protected $primaryKey = 'user_id';
     protected $keyType = 'string';
     protected $fillable = [
