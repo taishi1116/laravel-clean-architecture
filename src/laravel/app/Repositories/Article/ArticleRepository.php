@@ -20,7 +20,7 @@ class ArticleRepository implements ArticleInterface {
             return response()->json(['articles' => $response],200);
         }
         catch(Exception $e) {
-            return response()->json(['message' => '記事一覧を取得することができませんでした。'],500);
+            return response()->messageAndStatusCode('記事一覧を取得することができませんでした。',500);
         }
     }
 
@@ -39,9 +39,9 @@ class ArticleRepository implements ArticleInterface {
             $article_id = Str::uuid();
             $article->fill(['article_id' => $article_id,'user_id' => $user_id,'title' => $title,'content' => $content]);
             $article->save();
-            return response()->json(['message'=>'記事の新規投稿が完了しました。'],204);
+            return response()->messageAndStatusCode('記事の新規投稿が完了しました。',204);
         }catch(Exception $e){
-            return response()->json(['message'=>'記事の新規投稿に失敗しました。'],500);
+            return response()->messageAndStatusCode('記事の新規投稿に失敗しました。',500);
         }
     }
 
@@ -52,9 +52,9 @@ class ArticleRepository implements ArticleInterface {
             $article->title = $title;
             $article->content = $content;
             $article->save();
-            return response()->json(['message'=>'記事の更新が完了しました。'],204);
+            return response()->messageAndStatusCode('記事の更新が完了しました。',204);
         }catch(Exception $e){
-            return response()->json(['message'=>'記事の更新に失敗しました。'],500);
+            return response()->messageAndStatusCode('記事の更新に失敗しました。',500);
         }
     }
 
@@ -68,13 +68,13 @@ class ArticleRepository implements ArticleInterface {
         if (!$article->trashed()) {
             try {
                 $article->delete();
-                return response()->json(['message'=>'記事の削除が完了しました。'],204);
+                return response()->messageAndStatusCode('記事の削除が完了しました。',204);
             }
             catch (Exception $e) {
-                return response()->json(['message' =>'記事の削除に失敗しました'],500);
+                return response()->messageAndStatusCode('記事の削除に失敗しました',500);
             }
         } else {
-            return response()->json(['message' =>'この記事はすでに削除されています。'],400);
+            return response()->messageAndStatusCode('この記事はすでに削除されています。',400);
         }
     }
 }
