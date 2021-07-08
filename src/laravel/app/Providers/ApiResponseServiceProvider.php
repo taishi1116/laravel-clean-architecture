@@ -23,7 +23,7 @@ class ApiResponseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('error',function ($errMsg, $status = ResponseStatus::HTTP_INTERNAL_SERVER_ERROR){
+        Response::macro('messageAndStatusCode',function ($errMsg, $status = ResponseStatus::HTTP_INTERNAL_SERVER_ERROR){
             return response()->json(['message' => $errMsg],$status);
         });
     }

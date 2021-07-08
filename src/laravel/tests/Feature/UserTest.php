@@ -47,7 +47,7 @@ class UserTest extends TestCase
     public function testShowInvalidUserCheckMiddleware(){
         $user_id = 'dummy_user_id';
         $response = $this->actingAs($this->user)->getJson("/api/user/$user_id");
-        $response->assertStatus(403);
+        $response->assertStatus(404);
     }
 
     /**

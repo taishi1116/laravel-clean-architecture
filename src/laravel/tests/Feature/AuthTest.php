@@ -44,7 +44,7 @@ class AuthTest extends TestCase
     {
         $request = ['email' => 'failed@example.com','password'=>$this->password];
         $response = $this->postJson('/api/login',$request);
-        $response->assertStatus(401);
+        $response->assertStatus(404);
     }
     
     public function testLogout()

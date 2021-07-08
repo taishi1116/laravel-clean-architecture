@@ -14,10 +14,10 @@ class AuthRepository implements AuthInterface {
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return response()->json(['message' => 'ログインが完了しました。'], 200);            
+            return response()->messageAndStatusCode('ログインが完了しました。', 200);            
         }
 
-        return response()->json(['message' => 'ユーザーが見つかりません。'], 404);
+        return response()->messageAndStatusCode('ユーザーが見つかりません。', 404);
     }
 
     public function logout($request){
@@ -27,6 +27,6 @@ class AuthRepository implements AuthInterface {
 
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'ログアウトが完了しました'], 200);
+        return response()->messageAndStatusCode('ログアウトが完了しました', 200);
     }
 }

@@ -18,7 +18,7 @@ class LoginUserCheck
         $requestId = $request->user_id;
 
         if($loginId != $requestId){
-            return response()->error('ユーザーが見つかりませんでした',404);
+            return response()->messageAndStatusCode('ユーザーが見つかりませんでした',404);
         }
 
         return $next($request);
