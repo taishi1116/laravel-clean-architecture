@@ -11,18 +11,18 @@ class ArticlePolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * ブログ一覧の閲覧は常にtrue
      *
      * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * ブログ詳細の閲覧は常にtrue
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Article  $article
@@ -30,7 +30,7 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,11 +41,11 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
-     * Determine whether the user can update the model.
+     * 指定された投稿をユーザーが更新可能か判定
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Article  $article
@@ -53,11 +53,11 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        //
+        return $user->user_id === $article->user_id;
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * 指定された投稿をユーザーが削除可能か判定
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Article  $article
@@ -65,30 +65,6 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return mixed
-     */
-    public function restore(User $user, Article $article)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return mixed
-     */
-    public function forceDelete(User $user, Article $article)
-    {
-        //
+        return $user->user_id === $article->user_id;
     }
 }
