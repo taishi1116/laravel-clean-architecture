@@ -9,8 +9,6 @@ use App\Models\User;
 use App\Models\Article;
 use Illuminate\Support\Str;
 
-
-
 class ArticleTest extends TestCase
 {
     use RefreshDatabase,WithoutMiddleware;
@@ -35,7 +33,8 @@ class ArticleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testIndexArticleZero(){
+    public function testIndexArticleZero()
+    {
         $response= $this->actingAs($this->user)->WithoutMiddleware()->getJson('api/articles');
         $response->assertStatus(200)->assertJson(['articles' =>[]]);
     }
@@ -63,8 +62,8 @@ class ArticleTest extends TestCase
         $content = 'エンジニアブログはじめました。';
 
         $request_input = ['user_id' => $this->user_id,'title' => $title,'content' => $content];
-        $response = $this->actingAs($this->user)->withoutMiddleware()->postJson('api/articles',$request_input);
-        $response->assertStatus(204);
+        $response = $this->actingAs($this->user)->withoutMiddleware()->postJson('api/articles', $request_input);
+        $response->assertStatus(201);
     }
     
     
@@ -77,7 +76,7 @@ class ArticleTest extends TestCase
         $content = 'エンジニアブログはじめました。';
         
         $request_inputs = ['user_id' => $this->user_id,'content' => $content];
-        $response = $this->actingAs($this->user)->withoutMiddleware()->postJson('api/articles',$request_inputs);
+        $response = $this->actingAs($this->user)->withoutMiddleware()->postJson('api/articles', $request_inputs);
         $response->assertStatus(400);
     }
     
@@ -93,8 +92,8 @@ class ArticleTest extends TestCase
         
         $request_inputs =['user_id' => $this->user_id,'title' => $title,'content' => $content];
         
-        $response= $this->actingAs($this->user)->WithoutMiddleware()->putJson("api/articles/$this->article_id",$request_inputs);
-        $response->assertStatus(204);
+        $response= $this->actingAs($this->user)->WithoutMiddleware()->putJson("api/articles/$this->article_id", $request_inputs);
+        $response->assertStatus(200);
     }
 
     /**
@@ -102,7 +101,7 @@ class ArticleTest extends TestCase
      * 必須項目(content)漏れのためフォームリクエストでエラー
      */
     public function testUpdateInvalid()
-    {   
+    {
         Article::factory()->create([
             'article_id' => $this->article_id,
             'user_id' => $this->user_id,
@@ -112,7 +111,7 @@ class ArticleTest extends TestCase
 
         $request_inputs =['title' => $title];
         
-        $response= $this->actingAs($this->user)->WithoutMiddleware()->putJson("api/articles/$this->article_id",$request_inputs);
+        $response= $this->actingAs($this->user)->WithoutMiddleware()->putJson("api/articles/$this->article_id", $request_inputs);
         $response->assertStatus(400);
     }
 
@@ -124,6 +123,6 @@ class ArticleTest extends TestCase
         ]);
         $response = $this->actingAs($this->user)->deleteJson("api/articles/$this->article_id");
 
-        $response->assertStatus(204);
+        $response->assertStatus(200);
     }
 }
