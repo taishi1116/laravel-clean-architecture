@@ -10,6 +10,7 @@ use App\Http\Controllers\ArticleAPIController;
 use App\Http\Controllers\UserAPIController;
 use App\Http\Controllers\AuthAPIController;
 
+use App\Models\Article;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,17 +39,15 @@ Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
 // 記事
 Route::get('/articles', [ArticleAPIController::class, 'index']);
 Route::get('/articles/{article_id}', [ArticleAPIController::class, 'show']);
-Route::post('/articles', [ArticleAPIController::class, 'store'])->middleware('auth:sanctum','loginUserCheck');;
-Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update'])->middleware('auth:sanctum','loginUserCheck');;
-Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy'])->middleware('auth:sanctum','loginUserCheck');;
+Route::post('/articles', [ArticleAPIController::class, 'store'])->middleware('auth:sanctum', 'loginUserCheck', 'can:create,App\Models\Article');
+Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update'])->middleware('auth:sanctum', 'loginUserCheck', 'can:update,article_id');
+Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy'])->middleware('auth:sanctum', 'loginUserCheck', 'can:delete,article_id');
 // 認証
 Route::post('/login', [AuthAPIController::class, 'login']);
 Route::post('/logout', [AuthAPIController::class, 'logout']);
 
 // 会員情報
 Route::post('/user', [UserAPIController::class, 'store']);
-Route::get('/user/{user_id}', [UserAPIController::class, 'show'])->middleware('auth:sanctum','loginUserCheck');
-Route::put('/user/{user_id}', [UserAPIController::class, 'update'])->middleware('auth:sanctum','loginUserCheck');
-Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy'])->middleware('auth:sanctum','loginUserCheck');
-
-
+Route::get('/user/{user_id}', [UserAPIController::class, 'show'])->middleware('auth:sanctum', 'loginUserCheck');
+Route::put('/user/{user_id}', [UserAPIController::class, 'update'])->middleware('auth:sanctum', 'loginUserCheck');
+Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy'])->middleware('auth:sanctum', 'loginUserCheck');
