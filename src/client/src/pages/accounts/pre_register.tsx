@@ -1,10 +1,10 @@
 import React from 'react';
-import { PreRegisterUI } from 'src/components/accounts/preRegister';
+import { PreRegisterContainer } from 'src/components/accounts/preRegister';
 
 const PreRegister = () => {
   return (
     <>
-      <PreRegisterUI />
+      <PreRegisterContainer />
     </>
   );
 };

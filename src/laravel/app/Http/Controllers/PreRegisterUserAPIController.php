@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-
 // TODO リポジトリパターンで書き直す
 class PreRegisterUserAPIController extends Controller
 {
@@ -26,7 +25,7 @@ class PreRegisterUserAPIController extends Controller
      */
     public function store(PreRegisterRequest $request)
     {
-        $mail_address = $request->input('mail');
+        $mail_address = $request->input('email');
 
         $token = Str::uuid();
         $created_at = Carbon::now('Asia/Tokyo');
@@ -34,17 +33,16 @@ class PreRegisterUserAPIController extends Controller
 
 
         try {
-            $pre_register_user = PreRegisterUser::updateOrCreate(['mail' =>$mail_address],['token' => $token,'created_at'=>$created_at]);
-        }
-        catch(Exception $e){
+            $pre_register_user = PreRegisterUser::updateOrCreate(['mail' =>$mail_address], ['token' => $token,'created_at'=>$created_at]);
+        } catch (Exception $e) {
             response()->json(['message' =>'仮会員登録に失敗しました。再度やり直してください。',400]);
         }
 
         Mail::to($mail_address)->send(new PreRegisterUserMail($register_url));
-        if(count(Mail::failures()) > 0){
-            return response()->json(['message' =>'メールの送信に失敗しました。再度やり直してください。'],400);
+        if (count(Mail::failures()) > 0) {
+            return response()->json(['message' =>'メールの送信に失敗しました。再度やり直してください。'], 400);
         }
 
-        return response()->json([],201);
+        return response()->json([], 201);
     }
 }

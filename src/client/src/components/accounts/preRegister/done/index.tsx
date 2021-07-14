@@ -1,13 +1,20 @@
+import React from 'react';
+import { useRouter } from 'next/router';
 import { Button } from 'src/components/common/Button';
+import { paths } from 'src/utils/paths';
 
 type Props = {
-  setChangeDisplay: React.Dispatch<React.SetStateAction<'preRegisterForm' | 'preRegisterComp'>>;
+  handleClickResendMail: () => void;
 };
 
-export const PreRegisterComp = ({ setChangeDisplay }: Props) => {
-  const reSendEmailHandler = () => {
-    setChangeDisplay('preRegisterForm');
+export const PreRegisterDoneContainer = () => {
+  const router = useRouter();
+  const handleClickResendMail = () => {
+    router.push(paths.accounts.preRegister.index);
   };
+  return <PreRegisterDone handleClickResendMail={handleClickResendMail} />;
+};
+const PreRegisterDone: React.FC<Props> = ({ handleClickResendMail }) => {
   return (
     <div className="text-center mx-5">
       <div className="mx-auto my-8 text-lg font-bold">仮登録が完了しました</div>
@@ -18,7 +25,7 @@ export const PreRegisterComp = ({ setChangeDisplay }: Props) => {
       </div>
 
       <div className="w-6/12 mx-auto">
-        <Button title="メールを再送する" onClick={reSendEmailHandler} disabled={false} />
+        <Button title="メールを再送する" onClick={handleClickResendMail} disabled={false} />
       </div>
     </div>
   );

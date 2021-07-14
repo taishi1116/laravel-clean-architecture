@@ -1,7 +1,10 @@
 export const paths = {
   top: '/',
   accounts: {
-    preRegister: '/accounts/pre_register',
+    preRegister: {
+      index: '/accounts/pre_register',
+      done: '/accounts/pre_register/done',
+    },
     register: '/accounts/register',
     login: '/accounts/login',
     mypage: '/accounts/mypage',
