@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 class ArticleRepository implements ArticleInterface
 {
-    public function getAllArticles()
+    public function getArticlesWithPagination()
     {
-        return Article::all()->simplePaginate(15);
+        return Article::simplePaginate(15);
     }
 
     public function getArticleDetail($article_id)

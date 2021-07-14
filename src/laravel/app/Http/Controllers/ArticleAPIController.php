@@ -18,7 +18,7 @@ class ArticleAPIController extends Controller
 
     public function index()
     {
-        $articles =  $this->article_repository->getAllArticles();
+        $articles =  $this->article_repository->getArticlesWithPagination();
         $response = array();
         foreach ($articles as $article) {
             $extract_article_info = ['article_id' => $article->title,'title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
