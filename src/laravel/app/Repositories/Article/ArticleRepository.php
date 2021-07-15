@@ -10,7 +10,7 @@ class ArticleRepository implements ArticleInterface
 {
     public function getArticlesWithPagination()
     {
-        return Article::simplePaginate(15);
+        return Article::Paginate(15);
     }
 
     public function getArticleDetail($article_id)
