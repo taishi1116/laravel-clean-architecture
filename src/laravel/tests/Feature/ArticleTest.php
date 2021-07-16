@@ -28,15 +28,28 @@ class ArticleTest extends TestCase
 
     public function testIndex()
     {
-        Article::factory()->create();
+        Article::factory()->count(30)->create();
         $response= $this->actingAs($this->user)->WithoutMiddleware()->getJson('api/articles');
         $response->assertStatus(200);
     }
 
+    /**
+     * 求人一覧取得の正常系
+     * 求人が0件で、ページネーション情報が付随してくる
+     *
+     */
     public function testIndexArticleZero()
     {
         $response= $this->actingAs($this->user)->WithoutMiddleware()->getJson('api/articles');
-        $response->assertStatus(200)->assertJson(['articles' =>[]]);
+        $response->assertStatus(200)->assertJson([ "current_page"=> 1,
+        "data"=> [],
+        "first_page_url"=> "http://localhost/api/articles?page=1",
+        "from"=> null,
+        "next_page_url"=> null,
+        "path"=> "http://localhost/api/articles",
+        "per_page"=> 15,
+        "prev_page_url"=> null,
+        "to"=> null]);
     }
 
     public function testShow()

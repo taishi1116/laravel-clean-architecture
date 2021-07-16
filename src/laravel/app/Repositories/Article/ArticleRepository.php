@@ -5,12 +5,13 @@ namespace App\Repositories\Article;
 use App\Models\Article;
 use \Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ArticleRepository implements ArticleInterface
 {
     public function getArticlesWithPagination()
     {
-        return Article::Paginate(15);
+        return DB::table('articles')->select('article_id', 'title', 'content', 'created_at', 'updated_at')->simplePaginate(15);
     }
 
     public function getArticleDetail($article_id)

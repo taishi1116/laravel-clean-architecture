@@ -19,14 +19,8 @@ class ArticleAPIController extends Controller
     public function index()
     {
         $articles =  $this->article_repository->getArticlesWithPagination();
-        $response = array();
-        foreach ($articles as $article) {
-            $extract_article_info = ['article_id' => $article->title,'title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
-            array_push($response, $extract_article_info);
-        }
-
         // 0件でもfrontにレスポンスを返し、フロント側で表示分岐を実施する
-        return response()->json(['articles' => $response], 200);
+        return response()->json($articles, 200);
     }
 
     public function show($article_id)
