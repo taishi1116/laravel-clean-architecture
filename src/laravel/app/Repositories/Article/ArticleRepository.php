@@ -4,6 +4,7 @@ namespace App\Repositories\Article;
 
 use App\Models\Article;
 use \Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,12 @@ class ArticleRepository implements ArticleInterface
     }
 
 
-    public function postNewArticle(string $user_id, string $title, string $content)
+    public function postNewArticle(string $title, string $content)
     {
         $article = new Article();
+
+        // ログインユーザーのみが投稿できるので、Auth::id()から取得し外部注入を防ぐ
+        $user_id = Auth::id();
         $article_id = Str::uuid();
         $article->fill(['article_id' => $article_id,'user_id' => $user_id,'title' => $title,'content' => $content]);
         return $article->save();

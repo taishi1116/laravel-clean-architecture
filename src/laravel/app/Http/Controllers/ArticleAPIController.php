@@ -36,11 +36,10 @@ class ArticleAPIController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        $user_id =$request->input('user_id');
         $title =$request->input('title');
         $content =$request->input('content');
         
-        $response =$this->article_repository->postNewArticle($user_id, $title, $content);
+        $response =$this->article_repository->postNewArticle($title, $content);
 
         if ($response) {
             return response()->messageAndStatusCode('記事の新規投稿が完了しました。', 201);
