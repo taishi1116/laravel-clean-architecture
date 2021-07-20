@@ -21,7 +21,7 @@ return [
     'allowed_methods' => ['*'],
     
     // 通信を許可する送信元originを指定
-    'allowed_origins' => [env('FRONT_URL','http://localhost:3000')],
+    'allowed_origins' => [env('FRONT_URL', 'http://localhost:3000')],
 
     'allowed_origins_patterns' => [],
 

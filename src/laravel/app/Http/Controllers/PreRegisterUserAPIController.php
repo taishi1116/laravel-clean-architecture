@@ -29,7 +29,7 @@ class PreRegisterUserAPIController extends Controller
 
         $token = Str::uuid();
         $created_at = Carbon::now('Asia/Tokyo');
-        $register_url = "https://localhost:3000/accounts/register?token=$token";
+        $register_url = "https://localhost:3000/verify/token/$token";
 
 
         try {

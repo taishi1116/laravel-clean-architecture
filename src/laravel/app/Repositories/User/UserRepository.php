@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UserRepository implements UserInterface {
+class UserRepository implements UserInterface
+{
     public function createUser(string $name, string $email, string $password)
     {
         try {
@@ -20,10 +21,8 @@ class UserRepository implements UserInterface {
             $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $crypt_email , 'password' => $hash_password]);
             $user->save();
             return response()->json([], 201);
-        }
-        catch(Exception $e){
-            var_dump($e->getMessage());
-            return response()->json(['message' =>'会員登録に失敗しました。'],500);
+        } catch (Exception $e) {
+            return response()->json(['message' =>'会員登録に失敗しました。'], 500);
         }
     }
 
@@ -32,7 +31,7 @@ class UserRepository implements UserInterface {
         // findOrFailで見つからなかった場合自動で例外を投げてくれる
         $user = User::findOrFail($user_id);
 
-        return response()->json(['name'=>$user->name,'email'=>$user->email,'name'=>$user->password],200);
+        return response()->json(['name'=>$user->name,'email'=>$user->email,'name'=>$user->password], 200);
     }
 
     public function updateUser(string $user_id, string $name, string $email, string $password)
@@ -51,11 +50,10 @@ class UserRepository implements UserInterface {
             // update_atは自動更新される
             $user->save();
             
-            return response()->json([],204);
-        } catch (Exception $e){
-            return response()->json(['message' =>'会員情報の更新に失敗しました。'],500);
+            return response()->json([], 204);
+        } catch (Exception $e) {
+            return response()->json(['message' =>'会員情報の更新に失敗しました。'], 500);
         }
-
     }
 
     // 論理削除(ソフトデリート対応)
@@ -67,13 +65,12 @@ class UserRepository implements UserInterface {
         if (!$user->trashed()) {
             try {
                 $user->delete();
-                return response()->json([],204);
-            }
-            catch (Exception $e) {
-                return response()->json(['message' =>'会員情報の削除に失敗しました'],500);
+                return response()->json([], 204);
+            } catch (Exception $e) {
+                return response()->json(['message' =>'会員情報の削除に失敗しました'], 500);
             }
         } else {
-            return response()->json(['message' =>'会員情報はすでに削除されています。'],400);
+            return response()->json(['message' =>'会員情報はすでに削除されています。'], 400);
         }
     }
 }
