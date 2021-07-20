@@ -45,7 +45,7 @@ export const TopHeader = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    router.push(`${paths.accounts.preRegister}`);
+                    router.push(`${paths.accounts.preRegister.index}`);
                   }}
                 >
                   会員登録
@@ -56,8 +56,6 @@ export const TopHeader = () => {
                     router.push(`${paths.accounts.login}`);
                   }}
                 >
-                  {/* margin調整が不明のためコメント */}
-                  {/* <Image src="/icons/header-login.svg" width={20} height={13} /> */}
                   ログイン
                 </button>
               </>
