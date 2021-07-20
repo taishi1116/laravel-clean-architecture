@@ -34,7 +34,7 @@ export const RegisterForm: React.FC<Props> = ({
         <TextInput
           inputTitle="ユーザネーム"
           placeholder="アルケミ"
-          inputValue={inputUserName}
+          inputValue={inputUserName || ''}
           required={true}
           isDisabledValidate={validator.hasInputUserName()}
           validationText="ユーザーネームを入力してください"
@@ -43,7 +43,7 @@ export const RegisterForm: React.FC<Props> = ({
         <TextInput
           inputTitle="メールアドレス"
           placeholder="xxx@gmail.com"
-          inputValue={inputEmail}
+          inputValue={inputEmail || ''}
           required={true}
           isDisabledValidate={validator.hasInputEmail()}
           validationText="メールアドレスを入力してください"
@@ -52,7 +52,7 @@ export const RegisterForm: React.FC<Props> = ({
         <TextInput
           inputTitle="パスワード"
           placeholder="8文字以上の半角英数字"
-          inputValue={inputPassword}
+          inputValue={inputPassword || ''}
           type="password"
           required={true}
           isDisabledValidate={validator.hasInputPassword()}
@@ -62,7 +62,7 @@ export const RegisterForm: React.FC<Props> = ({
         <TextInput
           inputTitle="パスワード(確認)"
           placeholder="8文字以上の半角英数字"
-          inputValue={inputPasswordConfirmation}
+          inputValue={inputPasswordConfirmation || ''}
           type="password"
           required={true}
           isDisabledValidate={validator.isMatchPassword()}

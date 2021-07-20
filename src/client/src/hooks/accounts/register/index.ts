@@ -24,7 +24,7 @@ export const useRegister = () => {
 
   const emailRegex = /[\w\d_-]+@[\w\d_-]+\.[\w\d._-]+/;
 
-  const ENDPOINT = BASE_URL + 'user';
+  const ENDPOINT = BASE_URL + '/user';
 
   /* eslint-disable @typescript-eslint/camelcase */
   const params = {
@@ -35,10 +35,10 @@ export const useRegister = () => {
   };
 
   const validator: Validator = {
-    hasInputUserName: () => inputUserName.length > 0,
-    hasInputEmail: () => inputEmail.length > 0 && emailRegex.test(inputEmail),
-    hasInputPassword: () => inputPassword.length > 7,
-    isMatchPassword: () => inputPassword === inputPasswordConfirmation,
+    hasInputUserName: () => inputUserName && inputUserName.length > 0,
+    hasInputEmail: () => inputEmail && inputEmail.length > 0 && emailRegex.test(inputEmail),
+    hasInputPassword: () => inputPassword && inputPassword.length > 7,
+    isMatchPassword: () => inputPassword && inputPassword === inputPasswordConfirmation,
     canRegister: () => {
       return (
         validator.hasInputUserName() &&
