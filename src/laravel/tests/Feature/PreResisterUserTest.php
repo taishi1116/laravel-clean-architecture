@@ -8,9 +8,12 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
-
 class PreResisterUserTest extends TestCase
 {
+
+    //テスト実施後は仮データの削除
+    use RefreshDatabase;
+    
     /**
      * 仮会員登録の正常系
      * @param mail メールアドレス
@@ -22,7 +25,7 @@ class PreResisterUserTest extends TestCase
         // メールがテストで送信されないように
         Mail::fake();
 
-        $response = $this->postJson('/api/user/pre_register',['mail' =>'test@gmail.com']);
+        $response = $this->postJson('/api/user/pre_register', ['mail' =>'test@gmail.com']);
 
         // mailableが送られたことをアサート
         Mail::assertSent(PreRegisterUserMail::class);
@@ -36,8 +39,9 @@ class PreResisterUserTest extends TestCase
      * @param mail メールアドレス
      * @return null
      */
-    public function testStoreValidationError(){
-        $response = $this->postJson('/api/user/pre_register',['mail' =>'testgmailcom']);
+    public function testStoreValidationError()
+    {
+        $response = $this->postJson('/api/user/pre_register', ['mail' =>'testgmailcom']);
         $response->assertStatus(400);
     }
 
@@ -48,10 +52,9 @@ class PreResisterUserTest extends TestCase
      * @param mail メールアドレス
      * @return null
      */
-    public function testStoreValidationErrorMailNull(){
+    public function testStoreValidationErrorMailNull()
+    {
         $response = $this->postJson('/api/user/pre_register');
         $response->assertStatus(400);
     }
-
-
 }
