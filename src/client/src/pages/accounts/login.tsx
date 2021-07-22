@@ -1,9 +1,9 @@
-import { LoginUI } from 'src/components/accounts/login/index';
+import { LoginUIContainer } from 'src/components/accounts/login/index';
 
 const Login = () => {
   return (
     <>
-      <LoginUI />
+      <LoginUIContainer />
     </>
   );
 };

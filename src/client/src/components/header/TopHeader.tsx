@@ -5,16 +5,7 @@ import { getToken } from 'src/utils/getToken';
 
 export const TopHeader = () => {
   const router = useRouter();
-  const [loginToken, setLoginToken] = useState('');
-
-  const logoutHandler = async () => {
-    try {
-      window.document.cookie = 'user=; expires=0';
-      router.reload();
-    } catch (e) {
-      alert(e);
-    }
-  };
+  const [loginToken, setLoginToken] = useState<string | null>(null);
 
   useEffect(() => {
     setLoginToken(getToken());
@@ -36,7 +27,12 @@ export const TopHeader = () => {
                 >
                   記事一覧
                 </button>
-                <button className="my-auto	lg:mx-0 mr-3" onClick={logoutHandler}>
+                <button
+                  className="my-auto	lg:mx-0 mr-3"
+                  onClick={() => {
+                    alert('未実装');
+                  }}
+                >
                   ログアウト
                 </button>
               </>

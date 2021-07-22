@@ -1,67 +1,50 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'src/components/common/Button';
 import { TextInput } from 'src/components/common/TextInput';
-import { paths } from 'src/utils/paths';
+import { Validator } from 'src/hooks/accounts/login';
 
-export const LoginForm = () => {
-  const router = useRouter();
-  const [inputEmail, setInputEmail] = useState<string>('');
-  const [inputPassword, setInputPassword] = useState<string>('');
+type Props = {
+  inputEmail: string;
+  inputPassword: string;
+  handleChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleClickLogin: () => Promise<void>;
+  validator: Validator;
+};
 
-  const LOGIN_URL = 'http://localhost:3010/controller/accounts/login.php';
-
-  const validationCheck = {
-    checkEmail: () => inputEmail.length > 0,
-    checkPassword: () => inputPassword.length > 0,
-    canRegister: () => {
-      return validationCheck.checkEmail() && validationCheck.checkPassword();
-    },
-  };
-
-  const loginHandler = async () => {
-    const params = new URLSearchParams();
-    params.append('email', inputEmail);
-    params.append('password', inputEmail);
-
-    try {
-      const res = await axios.post(LOGIN_URL, params);
-      if (res && !res.data.err_code) {
-        window.document.cookie = `user=${res.data}`;
-        router.push(`${paths.top}`);
-      } else {
-        alert(res.data.message);
-      }
-    } catch (e) {
-      alert(e);
-    }
-  };
+export const LoginForm: React.VFC<Props> = ({
+  inputEmail,
+  inputPassword,
+  handleChangeEmail,
+  handleChangePassword,
+  handleClickLogin,
+  validator,
+}) => {
   return (
     <>
       <div className="w-7/12 mx-auto">
         <TextInput
           inputTitle="メールアドレス"
           placeholder="xxx@gmail.com"
-          inputValue={inputEmail}
+          inputValue={inputEmail || ''}
           required={true}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputEmail(e.target.value);
-          }}
+          onChange={handleChangeEmail}
+          isDisabledValidate={validator.isValidInputEmail()}
+          validationText="正しい形式のメールアドレスを入力してください"
         />
         <TextInput
           inputTitle="パスワード"
           placeholder="半角英数字8文字以上"
-          inputValue={inputPassword}
+          inputValue={inputPassword || ''}
           type="password"
           required={true}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputPassword(e.target.value);
-          }}
+          onChange={handleChangePassword}
+          isDisabledValidate={validator.isValidInputPassword()}
+          validationText="半角英数字8文字以上で入力してください"
         />
 
         <div className="pb-4">
-          <Button title="ログイン" onClick={loginHandler} disabled={!validationCheck.canRegister() ? true : false} />
+          <Button title="ログイン" onClick={handleClickLogin} disabled={!validator.isValidLogin()} />
         </div>
       </div>
     </>

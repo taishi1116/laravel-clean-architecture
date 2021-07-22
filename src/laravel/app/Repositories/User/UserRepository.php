@@ -10,15 +10,17 @@ use Illuminate\Support\Str;
 
 class UserRepository implements UserInterface
 {
+    // TODO emailを暗号化対応させたい
     public function createUser(string $name, string $email, string $password)
     {
         try {
             $user_id = Str::uuid();
-            $crypt_email = Crypt::encrypt($email);
+            // $crypt_email = Crypt::encrypt($email);
             $hash_password = Hash::make($password);
             
             $user = new User();
-            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $crypt_email , 'password' => $hash_password]);
+            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password]);
+            // $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $crypt_email , 'password' => $hash_password]);
             $user->save();
             return response()->json([], 201);
         } catch (Exception $e) {

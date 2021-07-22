@@ -1,12 +1,13 @@
-export function getToken(): string | null {
-  if (document.cookie != '') {
-    const cookieInfo = document.cookie.split('; ');
-    const cookieToken = cookieInfo.filter((o) => o.includes('user='))[0];
+export const getToken = () => {
+  const cookies = document.cookie;
+  const cookiesArray = cookies.split(';');
+  const SESSION_KEY = 'laravel_session';
 
-    if (cookieToken) {
-      return cookieToken.replace('user=', '');
+  for (const c of cookiesArray) {
+    const cArray = c.split('=');
+    if (cArray[0] == SESSION_KEY) {
+      return cArray[0];
     }
-
     return null;
   }
-}
+};
