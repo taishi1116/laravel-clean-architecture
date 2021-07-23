@@ -1,5 +1,5 @@
 import { Loading } from 'src/components/common/Loading';
-import { PostListUI } from 'src/components/post/list/';
+import { PostListUI } from 'src/components/articles/list';
 import { useArticleList } from 'src/hooks/articles/list';
 import { useEffect } from 'react';
 

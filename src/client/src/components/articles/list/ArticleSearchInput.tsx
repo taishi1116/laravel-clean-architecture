@@ -6,7 +6,7 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const PostSearchInput = ({ searchInput, onChange }: Props) => {
+export const ArticleSearchInput = ({ searchInput, onChange }: Props) => {
   return (
     <div className="w-7/12 mx-auto flex">
       <SearchInput

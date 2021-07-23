@@ -4,7 +4,7 @@ type Props = {
   commentTime: string;
 };
 
-export const PostCommentItem = ({ name, comment, commentTime }: Props) => {
+export const ArticleCommentItem = ({ name, comment, commentTime }: Props) => {
   return (
     <>
       <div className={'flex justify-between mb-2'}>

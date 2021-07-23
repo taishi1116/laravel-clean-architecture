@@ -6,7 +6,7 @@ type Props = {
   postHandler: () => Promise<void>;
 };
 
-export const PostCommentInput: React.FC<Props> = ({ inputComment, setInputComment, postHandler }) => {
+export const ArticleCommentInput: React.FC<Props> = ({ inputComment, setInputComment, postHandler }) => {
   return (
     <>
       <div className="w-7/12 mx-auto">

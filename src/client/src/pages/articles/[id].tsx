@@ -1,9 +1,9 @@
-import { PostDetailUI } from 'src/components/post/id';
+import { ArticleDetailUI } from 'src/components/articles/id';
 
 const Id = () => {
   return (
     <>
-      <PostDetailUI />
+      <ArticleDetailUI />
     </>
   );
 };

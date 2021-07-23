@@ -7,7 +7,7 @@ type Props = {
   postContent: string;
 };
 
-export const PostItem = ({ articleId, postTitle, postContent }: Props) => {
+export const ArticleItem = ({ articleId, postTitle, postContent }: Props) => {
   const router = useRouter();
   return (
     <div className={'wrapper mb-5'} onClick={() => router.push(`${paths.articles.default}/${articleId}`)}>

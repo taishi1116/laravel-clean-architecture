@@ -1,11 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { PostList } from 'src/components/post/list/PostList';
-import { Pager } from 'src/components/post/list/Pager';
+import { ArticleList } from 'src/components/articles/list/ArticleList';
+import { Pager } from 'src/components/articles/list/Pager';
 import { PagesHeader } from 'src/components/header/PagesHeader';
 
-type PostListProps = React.ComponentProps<typeof PostList>;
+type PostListProps = React.ComponentProps<typeof ArticleList>;
 type PagerProps = Omit<React.ComponentProps<typeof Pager>, 'currentPage' | 'lastPage'>;
 
 type Props = PostListProps & PagerProps;
@@ -22,7 +22,7 @@ export const PostListUI: React.FC<Props> = ({ articlesInfo, handleClickPreOrNext
         <Button title="検索" onClick={searchHandler} disabled={false} />
       </div> */}
 
-      <PostList articlesInfo={articlesInfo} />
+      <ArticleList articlesInfo={articlesInfo} />
 
       <Pager
         currentPage={articlesInfo.currentPage}
