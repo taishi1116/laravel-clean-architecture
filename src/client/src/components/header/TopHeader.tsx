@@ -22,7 +22,7 @@ export const TopHeader = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    router.push(`${paths.post.list}`);
+                    router.push(`${paths.articles.list}`);
                   }}
                 >
                   記事一覧

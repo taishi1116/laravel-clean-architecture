@@ -1,33 +1,26 @@
 import React from 'react';
 
 type Props = {
-  pagerLength: number;
-  pageNumber: number;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  lastPage: number;
+  handleClickPreOrNextArticle: (pageNumber: number) => void;
 };
 
-export const Pager = ({ pagerLength, pageNumber, setPageNumber }: Props) => {
-  const pager = [];
-  for (let i = 1; i <= pagerLength; i++) {
-    pager.push(i);
-  }
-
+export const Pager: React.FC<Props> = ({ currentPage, lastPage, handleClickPreOrNextArticle }) => {
   return (
     <>
       <div className="wrapper fixed bottom-1 left-2/4">
-        {pager.map((i) => (
-          <button
-            className={`${
-              pageNumber === i ? 'text-blue-400 mx-1 outline-none cursor-pointer' : 'mx-1 outline-none cursor-pointer'
-            }`}
-            key={i}
-            onClick={() => {
-              setPageNumber(i);
-            }}
-          >
-            {i}
+        {currentPage != 1 && (
+          <button className={``} onClick={() => handleClickPreOrNextArticle(currentPage - 1)}>
+            前へ
           </button>
-        ))}
+        )}
+
+        {currentPage < lastPage && (
+          <button className={``} onClick={() => handleClickPreOrNextArticle(currentPage + 1)}>
+            次へ
+          </button>
+        )}
       </div>
       <style jsx>{`
         .wrapper {

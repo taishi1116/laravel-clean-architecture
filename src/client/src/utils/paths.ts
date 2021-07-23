@@ -10,9 +10,9 @@ export const paths = {
     mypage: '/accounts/mypage',
     edit: '/accounts/edit',
   },
-  post: {
-    default: '/post',
-    list: '/post/list',
-    add: '/post/add',
+  articles: {
+    default: '/articles',
+    list: '/articles/list',
+    add: '/articles/add',
   },
 };

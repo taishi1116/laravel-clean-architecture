@@ -16,14 +16,14 @@ export const TopUI = () => {
           <Button
             title="投稿一覧を見る"
             onClick={() => {
-              router.push(paths.post.list);
+              router.push(paths.articles.list);
             }}
             disabled={false}
           />
           {/* <Button
             title="新規投稿する"
             onClick={() => {
-              token ? router.push(paths.post.add) : router.push(paths.accounts.login);
+              token ? router.push(paths.articles.add) : router.push(paths.accounts.login);
             }}
             disabled={false}
           />
