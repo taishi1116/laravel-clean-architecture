@@ -2,15 +2,15 @@ import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
 
 type Props = {
-  postId: string;
+  articleId: string;
   postTitle: string;
   postContent: string;
 };
 
-export const PostItem = ({ postId, postTitle, postContent }: Props) => {
+export const ArticleItem = ({ articleId, postTitle, postContent }: Props) => {
   const router = useRouter();
   return (
-    <div className={'wrapper mb-5'} onClick={() => router.push(`${paths.post.default}/${postId}`)}>
+    <div className={'wrapper mb-5'} onClick={() => router.push(`${paths.articles.default}/${articleId}`)}>
       <div className={'text-lg font-bold mb-3'}>{postTitle}</div>
       <div className={'truncate'}>{postContent}</div>
       <style jsx>

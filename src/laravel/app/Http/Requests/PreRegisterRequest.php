@@ -26,7 +26,7 @@ class PreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'mail'  => 'required|email',
+            'email'  => 'required|email',
         ];
     }
 //
@@ -44,7 +44,8 @@ class PreRegisterRequest extends FormRequest
      * @throw HttpResponseException
      * @see PreRegisterRequest::failedValidation()
      */
-    protected function failedValidation(Validator $validator) {
+    protected function failedValidation(Validator $validator)
+    {
         $res = response()->json([
             'errors' => $validator->errors(),
         ], 400);

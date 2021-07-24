@@ -5,16 +5,7 @@ import { getToken } from 'src/utils/getToken';
 
 export const TopHeader = () => {
   const router = useRouter();
-  const [loginToken, setLoginToken] = useState('');
-
-  const logoutHandler = async () => {
-    try {
-      window.document.cookie = 'user=; expires=0';
-      router.reload();
-    } catch (e) {
-      alert(e);
-    }
-  };
+  const [loginToken, setLoginToken] = useState<string | null>(null);
 
   useEffect(() => {
     setLoginToken(getToken());
@@ -31,12 +22,17 @@ export const TopHeader = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    router.push(`${paths.post.list}`);
+                    router.push(`${paths.articles.list}`);
                   }}
                 >
                   記事一覧
                 </button>
-                <button className="my-auto	lg:mx-0 mr-3" onClick={logoutHandler}>
+                <button
+                  className="my-auto	lg:mx-0 mr-3"
+                  onClick={() => {
+                    alert('未実装');
+                  }}
+                >
                   ログアウト
                 </button>
               </>
@@ -45,7 +41,7 @@ export const TopHeader = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    router.push(`${paths.accounts.preRegister}`);
+                    router.push(`${paths.accounts.preRegister.index}`);
                   }}
                 >
                   会員登録
@@ -56,8 +52,6 @@ export const TopHeader = () => {
                     router.push(`${paths.accounts.login}`);
                   }}
                 >
-                  {/* margin調整が不明のためコメント */}
-                  {/* <Image src="/icons/header-login.svg" width={20} height={13} /> */}
                   ログイン
                 </button>
               </>

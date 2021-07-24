@@ -12,7 +12,7 @@ class ArticleRepository implements ArticleInterface
 {
     public function getArticlesWithPagination()
     {
-        return DB::table('articles')->select('article_id', 'title', 'content', 'created_at', 'updated_at')->simplePaginate(15);
+        return DB::table('articles')->select('article_id', 'title', 'content', 'created_at', 'updated_at')->paginate(15);
     }
 
     public function getArticleDetail($article_id)
