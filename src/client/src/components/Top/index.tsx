@@ -1,9 +1,22 @@
 import { Button } from 'src/components/common/Button';
 import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
+import { httpClient } from 'src/utils/httpClient';
+import { BASE_URL } from 'src/utils/constants';
+import { useEffect } from 'react';
 
 export const TopUI = () => {
   const router = useRouter();
+
+  //  TODO ログイン後のユーザーが取得できないs
+  const fetchLoginUser = async () => {
+    const res = await httpClient.get(BASE_URL + '/user');
+    console.log(res);
+  };
+
+  useEffect(() => {
+    fetchLoginUser();
+  }, []);
 
   return (
     <>
