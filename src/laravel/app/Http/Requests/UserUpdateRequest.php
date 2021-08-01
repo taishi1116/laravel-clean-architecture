@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,6 @@ class UserRequest extends FormRequest
         return [
             'name' =>'required',
             'email'  => 'required|email',
-            'password'  => 'required|min:8|confirmed',
-            'password_confirmation'  => 'required|min:8',
         ];
     }
 
@@ -39,7 +37,8 @@ class UserRequest extends FormRequest
      * @throw HttpResponseException
      * @see PreRegisterRequest::failedValidation()
      */
-    protected function failedValidation(Validator $validator) {
+    protected function failedValidation(Validator $validator)
+    {
         $res = response()->json([
             'errors' => $validator->errors(),
         ], 400);

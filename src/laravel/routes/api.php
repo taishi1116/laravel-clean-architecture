@@ -49,9 +49,3 @@ Route::post('/user', [UserAPIController::class, 'store']);
 Route::get('/user/{user_id}', [UserAPIController::class, 'show'])->middleware('auth:sanctum', 'loginUserCheck');
 Route::put('/user/{user_id}', [UserAPIController::class, 'update'])->middleware('auth:sanctum', 'loginUserCheck');
 Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy'])->middleware('auth:sanctum', 'loginUserCheck');
-
-
-// ユーザー情報の取得
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
