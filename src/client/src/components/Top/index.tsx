@@ -1,22 +1,12 @@
 import { Button } from 'src/components/common/Button';
 import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
-import { httpClient } from 'src/utils/httpClient';
-import { BASE_URL } from 'src/utils/constants';
-import { useEffect } from 'react';
+import { useContext } from 'react';
+import { globalContext } from 'src/contexts/globalContext';
 
 export const TopUI = () => {
   const router = useRouter();
-
-  //  TODO ログイン後のユーザーが取得できないs
-  const fetchLoginUser = async () => {
-    const res = await httpClient.get(BASE_URL + '/user');
-    console.log(res);
-  };
-
-  useEffect(() => {
-    fetchLoginUser();
-  }, []);
+  const { token } = useContext(globalContext);
 
   return (
     <>
@@ -33,20 +23,24 @@ export const TopUI = () => {
             }}
             disabled={false}
           />
-          {/* <Button
-            title="新規投稿する"
-            onClick={() => {
-              token ? router.push(paths.articles.add) : router.push(paths.accounts.login);
-            }}
-            disabled={false}
-          />
-          <Button
-            title="マイページ"
-            onClick={() => {
-              token ? router.push(paths.accounts.mypage) : router.push(paths.accounts.login);
-            }}
-            disabled={false}
-          /> */}
+          {token && (
+            <>
+              <Button
+                title="新規投稿する"
+                onClick={() => {
+                  token ? router.push(paths.articles.add) : router.push(paths.accounts.login);
+                }}
+                disabled={false}
+              />
+              <Button
+                title="マイページ"
+                onClick={() => {
+                  token ? router.push(paths.accounts.mypage) : router.push(paths.accounts.login);
+                }}
+                disabled={false}
+              />
+            </>
+          )}
         </div>
       </div>
       <style jsx>{``}</style>

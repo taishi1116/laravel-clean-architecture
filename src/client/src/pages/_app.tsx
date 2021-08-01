@@ -1,6 +1,7 @@
 import './styles.css';
 import { SnackbarProvider } from 'notistack';
 import Slide from '@material-ui/core/Slide';
+import { GlobalContextWrapper } from 'src/contexts/globalContext';
 
 function App({ Component, pageProps }) {
   return (
@@ -13,7 +14,9 @@ function App({ Component, pageProps }) {
       TransitionComponent={Slide}
       autoHideDuration={3000}
     >
-      <Component {...pageProps} />;
+      <GlobalContextWrapper>
+        <Component {...pageProps} />;
+      </GlobalContextWrapper>
     </SnackbarProvider>
   );
 }

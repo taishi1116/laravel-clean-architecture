@@ -3,14 +3,9 @@
 namespace App\Repositories\Auth;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthRepository implements AuthInterface
 {
-    //テスト実施後は仮データの削除
-    use RefreshDatabase;
-
-
     public function login($request)
     {
         $credentials = $request->validate([
@@ -29,7 +24,7 @@ class AuthRepository implements AuthInterface
             // $user->token = $user->createToken("test")->plainTextToken;
             $user->token = $user->createToken($user->name)->plainTextToken;
             
-            return response()->messageAndStatusCode(['user' => $user], 200);
+            return response()->json(['user' => $user], 200);
         }
 
         return response()->messageAndStatusCode('ユーザーが見つかりません。', 404);

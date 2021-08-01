@@ -1,15 +1,11 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { globalContext } from 'src/contexts/globalContext';
 import { paths } from 'src/utils/paths';
-import { getToken } from 'src/utils/getToken';
 
-export const TopHeader = () => {
+export const TopHeader: React.FC = () => {
   const router = useRouter();
-  const [loginToken, setLoginToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setLoginToken(getToken());
-  }, []);
+  const { token } = useContext(globalContext);
 
   return (
     <>
@@ -17,7 +13,7 @@ export const TopHeader = () => {
         <div className="lg:w-2/4 flex justify-between mx-auto h-12">
           <div className="my-auto	mx-0">タイトル名</div>
           <div className="lg:w-3/12 flex justify-between">
-            {loginToken ? (
+            {token ? (
               <>
                 <button
                   className="my-auto	lg:mx-0 mr-3"
@@ -30,7 +26,8 @@ export const TopHeader = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    alert('未実装');
+                    localStorage.removeItem('auth-token');
+                    router.reload();
                   }}
                 >
                   ログアウト

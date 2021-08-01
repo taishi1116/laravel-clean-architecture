@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
 import { useSnackbar } from 'notistack';
-import { BASE_URL, AUTH_INIT_ENDPOINT } from 'src/utils/constants';
+import { BASE_URL } from 'src/utils/constants';
 import { httpClient } from 'src/utils/httpClient';
+import { globalContext } from 'src/contexts/globalContext';
 
 export type Validator = {
   isValidInputEmail: () => boolean;
@@ -14,6 +15,7 @@ export type Validator = {
 export const useLogin = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const { setToken } = useContext(globalContext);
   const [inputEmail, setInputEmail] = useState<string | null>(null);
   const [inputPassword, setInputPassword] = useState<string | null>(null);
 
@@ -30,17 +32,15 @@ export const useLogin = () => {
 
   const handleClickLogin = async () => {
     try {
-      const authInitRes = await httpClient.get(AUTH_INIT_ENDPOINT);
-
-      if (authInitRes.status) {
-        const params = {
-          email: inputEmail,
-          password: inputPassword,
-        };
-        const loginRes = await httpClient.post(LOGIN_ENDPOINT, params);
-        if (loginRes.status === 200) {
-          router.push(paths.top);
-        }
+      const params = {
+        email: inputEmail,
+        password: inputPassword,
+      };
+      const res = await httpClient.post(LOGIN_ENDPOINT, params);
+      if (res.status === 200) {
+        localStorage.setItem('auth-token', res.data.user.token);
+        setToken(localStorage.getItem('auth-token'));
+        router.push(paths.top);
       }
     } catch (e) {
       enqueueSnackbar(e.message, { variant: 'error' });
