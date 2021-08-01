@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Tests\TestCase;
 
-
 class AuthTest extends TestCase
 {
     //テスト実施後は仮データの削除
@@ -32,7 +31,8 @@ class AuthTest extends TestCase
     public function testLoginSuccess()
     {
         $request = ['email' => $this->email,'password'=>$this->password];
-        $response = $this->postJson('/api/login',$request);
+        $response = $this->postJson('/api/login', $request);
+        dump($response);
         $response->assertStatus(200);
     }
     
@@ -43,7 +43,7 @@ class AuthTest extends TestCase
     public function testLoginFailedInvalidInput()
     {
         $request = ['email' => 'failed@example.com','password'=>$this->password];
-        $response = $this->postJson('/api/login',$request);
+        $response = $this->postJson('/api/login', $request);
         $response->assertStatus(404);
     }
     
