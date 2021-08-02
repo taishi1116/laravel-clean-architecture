@@ -30,7 +30,9 @@ class ArticleRepository implements ArticleInterface
         $user_id = Auth::id();
         $article_id = Str::uuid();
         $article->fill(['article_id' => $article_id,'user_id' => $user_id,'title' => $title,'content' => $content]);
-        return $article->save();
+        $article->save();
+
+        return ["article_id" => $article_id];
     }
 
     public function updateArticleDetail(string $article_id, string $title, string $content)

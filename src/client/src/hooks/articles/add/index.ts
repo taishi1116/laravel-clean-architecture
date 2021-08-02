@@ -6,6 +6,12 @@ import { useRouter } from 'next/router';
 import { paths } from 'src/utils/paths';
 import { useSnackbar } from 'notistack';
 
+export type Validator = {
+  isValidTitle: () => boolean;
+  isValidContent: () => boolean;
+  canPostArticle: () => () => boolean;
+};
+
 export const useArticleAdd = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -27,7 +33,7 @@ export const useArticleAdd = () => {
     setTitle(e.target.value);
   };
 
-  const handleChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 

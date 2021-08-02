@@ -42,7 +42,7 @@ class ArticleAPIController extends Controller
         $response =$this->article_repository->postNewArticle($title, $content);
 
         if ($response) {
-            return response()->messageAndStatusCode('記事の新規投稿が完了しました。', 201);
+            return response()->json($response, 201);
         } else {
             return response()->messageAndStatusCode('記事の新規投稿に失敗しました。', 500);
         }
