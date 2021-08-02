@@ -1,9 +1,9 @@
-import { MypageUI } from 'src/components/accounts/mypage';
+import { MypageContainer } from 'src/components/accounts/mypage';
 
 const mypage = () => {
   return (
     <>
-      <MypageUI />
+      <MypageContainer />
     </>
   );
 };

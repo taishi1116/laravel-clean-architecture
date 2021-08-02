@@ -15,7 +15,7 @@ export type Validator = {
 export const useLogin = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { setToken } = useContext(globalContext);
+  const { setToken, setUserId } = useContext(globalContext);
   const [inputEmail, setInputEmail] = useState<string | null>(null);
   const [inputPassword, setInputPassword] = useState<string | null>(null);
 
@@ -39,7 +39,9 @@ export const useLogin = () => {
       const res = await httpClient.post(LOGIN_ENDPOINT, params);
       if (res.status === 200) {
         localStorage.setItem('auth-token', res.data.user.token);
+        localStorage.setItem('user-id', res.data.user.user_id);
         setToken(localStorage.getItem('auth-token'));
+        setUserId(localStorage.getItem('user-id'));
         router.push(paths.top);
       }
     } catch (e) {

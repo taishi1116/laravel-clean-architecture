@@ -1,14 +1,52 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 import { PagesHeader } from 'src/components/header/PagesHeader';
 import { UserInfo } from 'src/components/accounts/mypage/UserInfo';
+import { useMypage } from 'src/hooks/accounts/mypage';
+import { Loading } from 'src/components/common/Loading';
 
-export const MypageUI = () => {
-  const router = useRouter();
+type UserInfoProps = React.ComponentProps<typeof UserInfo>;
+
+type Props = UserInfoProps & { loading: boolean };
+
+export const MypageContainer = () => {
+  const { userName, email, loading, validator, handleChangeUserName, handleChangeEmail, updateUserInfo } = useMypage();
 
   return (
+    <MypageUI
+      userName={userName}
+      email={email}
+      loading={loading}
+      validator={validator}
+      handleChangeUserName={handleChangeUserName}
+      handleChangeEmail={handleChangeEmail}
+      updateUserInfo={updateUserInfo}
+    />
+  );
+};
+
+export const MypageUI: React.FC<Props> = ({
+  userName,
+  email,
+  loading,
+  validator,
+  handleChangeUserName,
+  handleChangeEmail,
+  updateUserInfo,
+}) => {
+  if (loading) {
+    return <Loading />;
+  }
+  return (
     <>
-      <PagesHeader title="マイページ" onClick={() => router.back()} />
-      <UserInfo />
+      <PagesHeader title="マイページ" />
+      <UserInfo
+        userName={userName}
+        email={email}
+        validator={validator}
+        handleChangeUserName={handleChangeUserName}
+        handleChangeEmail={handleChangeEmail}
+        updateUserInfo={updateUserInfo}
+      />
     </>
   );
 };

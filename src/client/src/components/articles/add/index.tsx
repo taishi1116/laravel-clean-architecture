@@ -1,78 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TextArea } from 'src/components/common/Textarea';
 import { TextInput } from 'src/components/common/TextInput';
 import { Button } from 'src/components/common/Button';
-import { getToken } from '../../../utils/getToken';
-import axios from 'axios';
-import { paths } from '../../../utils/paths';
-import { useRouter } from 'next/router';
 import { PagesHeader } from '../../header/PagesHeader';
+import { useArticleAdd, Validator } from 'src/hooks/articles/add';
 
-// TODO 他のファイルを踏襲したコンポーネントとする
-export const PostAddUI = () => {
-  const router = useRouter();
-  const [token, setToken] = useState<string>('');
-  const [inputPostTitle, setInputPostTitle] = useState<string>('');
-  const [inputPostContent, setInputPostContent] = useState<string>('');
+type Props = {
+  title: string;
+  content: string;
+  validator: Validator;
+  handleChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  postNewArticle: () => Promise<void>;
+};
 
-  const POST_ADD_URL = 'http://localhost:3010/controller/post/add.php';
-
-  const postHandler = async () => {
-    const params = new URLSearchParams();
-    params.append('user_id', token);
-    params.append('title', inputPostTitle);
-    params.append('content', inputPostContent);
-
-    try {
-      const res = await axios.post(POST_ADD_URL, params);
-      if (res && !res.data.err_code) {
-        router.push(paths.top);
-      } else {
-        alert(res.data.message);
-      }
-    } catch (e) {
-      alert(e);
-    }
-  };
-
-  const validation = {
-    checkPostTitle: () => inputPostTitle.length > 0,
-    checkPostContent: () => inputPostContent.length > 0,
-    canPost: () => {
-      return validation.checkPostTitle() && validation.checkPostContent();
-    },
-  };
-
-  useEffect(() => {
-    const fetchToken = getToken();
-    setToken(fetchToken);
-  }, []);
+export const ArticleAddContainer = () => {
+  const { title, content, validator, handleChangeTitle, handleChangeContent, postNewArticle } = useArticleAdd();
 
   return (
+    <ArticleAddUI
+      title={title}
+      content={content}
+      validator={validator}
+      handleChangeTitle={handleChangeTitle}
+      handleChangeContent={handleChangeContent}
+      postNewArticle={postNewArticle}
+    />
+  );
+};
+
+export const ArticleAddUI: React.FC<Props> = ({
+  title,
+  content,
+  validator,
+  handleChangeTitle,
+  handleChangeContent,
+  postNewArticle,
+}) => {
+  return (
     <>
-      <PagesHeader title="新規投稿" onClick={() => router.back()} />
+      <PagesHeader title="新規投稿" />
 
       <div className="w-7/12 mx-auto">
         <TextInput
           inputTitle="投稿タイトル"
           placeholder="投稿タイトルを入力"
-          inputValue={inputPostTitle}
+          inputValue={title}
           required={false}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputPostTitle(e.target.value);
-          }}
+          onChange={handleChangeTitle}
         />
 
         <TextArea
           textAreaTitle="投稿内容"
           placeholder="投稿内容を入力"
-          textAreaInput={inputPostContent}
+          textAreaInput={content}
           required={false}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setInputPostContent(e.target.value);
-          }}
+          onChange={handleChangeContent}
         />
-        <Button title="投稿する" onClick={postHandler} disabled={!validation.canPost() ? true : false} />
+        <Button title="投稿する" onClick={postNewArticle} disabled={!validator.canPostArticle} />
       </div>
     </>
   );

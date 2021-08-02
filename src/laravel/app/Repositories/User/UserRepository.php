@@ -7,20 +7,18 @@ use \Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class UserRepository implements UserInterface
 {
-    // TODO emailを暗号化対応させたい
     public function createUser(string $name, string $email, string $password)
     {
         try {
             $user_id = Str::uuid();
-            // $crypt_email = Crypt::encrypt($email);
             $hash_password = Hash::make($password);
             
             $user = new User();
             $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password]);
-            // $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $crypt_email , 'password' => $hash_password]);
             $user->save();
             return response()->json([], 201);
         } catch (Exception $e) {
@@ -28,26 +26,24 @@ class UserRepository implements UserInterface
         }
     }
 
-    public function findUser(string $user_id)
+    public function findUser(Request $request)
     {
-        // findOrFailで見つからなかった場合自動で例外を投げてくれる
-        $user = User::findOrFail($user_id);
-
-        return response()->json(['name'=>$user->name,'email'=>$user->email,'name'=>$user->password], 200);
+        $name = $request->user()->name;
+        $email =Crypt::decrypt($request->user()->email);
+    
+        return response()->json(["name" => $name, "email" => $email], 200);
     }
 
-    public function updateUser(string $user_id, string $name, string $email, string $password)
+    public function updateUser(string $user_id, string $name, string $email)
     {
         // findOrFailで見つからなかった場合自動で例外を投げてくれる
         $user = User::findOrFail($user_id);
 
         try {
             $crypt_email = Crypt::encrypt($email);
-            $hash_password = Hash::make($password);
             
             $user->name = $name;
             $user->email = $crypt_email;
-            $user->password = $hash_password;
             
             // update_atは自動更新される
             $user->save();

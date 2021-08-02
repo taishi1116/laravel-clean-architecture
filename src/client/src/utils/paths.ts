@@ -12,6 +12,7 @@ export const paths = {
   },
   articles: {
     default: '/articles',
+    detail: (articleId: string) => `/articles/${articleId}`,
     list: '/articles/list',
     add: '/articles/add',
   },
