@@ -27,7 +27,6 @@ class PreResisterUserTest extends TestCase
 
         $response = $this->postJson('/api/user/pre_register', ['email' =>'test@gmail.com']);
 
-        dump($response);
         // mailableが送られたことをアサート
         Mail::assertSent(PreRegisterUserMail::class);
 

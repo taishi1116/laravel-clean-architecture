@@ -31,7 +31,6 @@ class UserStoreRequest extends FormRequest
             'representative_image' => 'required|image',
             'password' => 'required|min:8|confirmed',
             'password_confirmation'  => 'required|min:8',
-
         ];
     }
 
