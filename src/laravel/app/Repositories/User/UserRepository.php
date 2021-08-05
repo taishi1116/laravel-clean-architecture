@@ -8,17 +8,22 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserRepository implements UserInterface
 {
-    public function createUser(string $name, string $email, string $password)
+    public function createUser(string $name, string $email, string $password, $representative_image)
     {
         try {
             $user_id = Str::uuid();
             $hash_password = Hash::make($password);
+
+            $upload_image = Storage::disk('s3')->put('/test', $representative_image, 'public');
+            //S3へのファイルアップロード処理時の情報をurlに変換する
+            $image_path = Storage::disk('s3')->url($upload_image);
             
             $user = new User();
-            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password]);
+            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password, "representative_image" => $image_path]);
             $user->save();
             return response()->json([], 201);
         } catch (Exception $e) {
@@ -34,16 +39,21 @@ class UserRepository implements UserInterface
         return response()->json(["name" => $name, "email" => $email], 200);
     }
 
-    public function updateUser(string $user_id, string $name, string $email)
+    public function updateUser(string $user_id, string $name, string $email, $representative_image)
     {
         // findOrFailで見つからなかった場合自動で例外を投げてくれる
         $user = User::findOrFail($user_id);
-
         try {
+
+            // st
+            Storage::disk('s3')->delete($user->representative_image);
+
+            // 更新で送られてきた画像を保存する
             $crypt_email = Crypt::encrypt($email);
             
             $user->name = $name;
             $user->email = $crypt_email;
+            $user->representative_image = $representative_image;
             
             // update_atは自動更新される
             $user->save();
