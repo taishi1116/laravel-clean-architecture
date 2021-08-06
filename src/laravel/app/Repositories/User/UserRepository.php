@@ -19,7 +19,7 @@ class UserRepository implements UserInterface
             $hash_password = Hash::make($password);
 
             $upload_image = Storage::disk('s3')->put('/test', $representative_image, 'public');
-            //S3へのファイルアップロード処理時の情報をurlに変換する
+            //S3へのファイルアップロード処理時の画像をurlに変換する
             $image_path = Storage::disk('s3')->url($upload_image);
             
             $user = new User();
@@ -34,7 +34,7 @@ class UserRepository implements UserInterface
     public function findUser(Request $request)
     {
         $name = $request->user()->name;
-        $email =Crypt::decrypt($request->user()->email);
+        $email =Crypt::encrypt($request->user()->email);
     
         return response()->json(["name" => $name, "email" => $email], 200);
     }
@@ -45,15 +45,19 @@ class UserRepository implements UserInterface
         $user = User::findOrFail($user_id);
         try {
 
-            // st
+            // 既存で保存してある画像を削除する
             Storage::disk('s3')->delete($user->representative_image);
 
-            // 更新で送られてきた画像を保存する
+
+            $upload_image = Storage::disk('s3')->put('/test', $representative_image, 'public');
+            //S3へのファイルアップロード処理時の画像をurlに変換する
+            $image_path = Storage::disk('s3')->url($upload_image);
+
             $crypt_email = Crypt::encrypt($email);
             
             $user->name = $name;
             $user->email = $crypt_email;
-            $user->representative_image = $representative_image;
+            $user->representative_image = $image_path;
             
             // update_atは自動更新される
             $user->save();

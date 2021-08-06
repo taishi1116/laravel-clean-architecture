@@ -21,8 +21,9 @@ class UserAPIController extends Controller
         $name =$request->input('name');
         $email =$request->input('email');
         $password =$request->input('password');
+        $representative_image =$request->input('representative_image');
 
-        return $this->user_repository->createUser($name, $email, $password);
+        return $this->user_repository->createUser($name, $email, $password, $representative_image);
     }
 
     public function show(Request $request)
@@ -34,8 +35,10 @@ class UserAPIController extends Controller
     {
         $name =$request->input('name');
         $email =$request->input('email');
+        $representative_image =$request->input('representative_image');
 
-        return $this->user_repository->updateUser($user_id, $name, $email);
+
+        return $this->user_repository->updateUser($user_id, $name, $email, $representative_image);
     }
 
     /**

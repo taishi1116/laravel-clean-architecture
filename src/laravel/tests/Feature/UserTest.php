@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class UserTest extends TestCase
 {
@@ -21,6 +23,7 @@ class UserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         // user_idを固定してテストデータを作成する
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
         // 削除処理済みのUserを作成
@@ -58,10 +61,13 @@ class UserTest extends TestCase
      */
     public function testStore()
     {
+        Storage::fake('photos');
+        
         $password ='password';
+        $representative_image =UploadedFile::fake()->image("dummy.png");
         $response = $this->postJson(
             '/api/user',
-            ['name' =>'篠田 泰志','email' =>'test@example.com','password' =>$password,'password_confirmation' => $password]
+            ['name' =>'篠田 泰志','email' =>'test@example.com', 'representative_image' => $representative_image ,'password' =>$password,'password_confirmation' => $password]
         );
 
         $response->assertStatus(201);
@@ -104,10 +110,13 @@ class UserTest extends TestCase
      */
     public function testUpdate()
     {
+        Storage::fake('photos');
+
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
+        $representative_image =UploadedFile::fake()->image("dummy.png");
         $response = $this->actingAs($this->user)->putJson(
             "/api/user/$user_id",
-            ['name' =>'篠田 泰志','email' =>'test@example.com']
+            ['name' =>'篠田 泰志','email' =>'test@example.com','representative_image' => $representative_image]
         );
 
         $response->assertStatus(204);
