@@ -32,7 +32,6 @@ class AuthTest extends TestCase
     {
         $request = ['email' => $this->email,'password'=>$this->password];
         $response = $this->postJson('/api/login', $request);
-        dump($response);
         $response->assertStatus(200);
     }
     

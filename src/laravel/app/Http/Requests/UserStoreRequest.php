@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-
 class UserStoreRequest extends FormRequest
 {
     /**
@@ -29,9 +28,9 @@ class UserStoreRequest extends FormRequest
         return [
             'name'=> 'required',
             'email' => 'required|email|unique:App\Models\User,email',
+            'representative_image' => 'required|string',
             'password' => 'required|min:8|confirmed',
             'password_confirmation'  => 'required|min:8',
-
         ];
     }
 
@@ -41,7 +40,8 @@ class UserStoreRequest extends FormRequest
      * @throw HttpResponseException
      * @see PreRegisterRequest::failedValidation()
      */
-    protected function failedValidation(Validator $validator) {
+    protected function failedValidation(Validator $validator)
+    {
         $res = response()->json([
             'errors' => $validator->errors(),
         ], 400);

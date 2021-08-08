@@ -14,10 +14,12 @@ export const RegisterUIContainer = () => {
   };
 
   const {
+    inputBase64RepresentativeImage,
     inputUserName,
     inputEmail,
     inputPassword,
     inputPasswordConfirmation,
+    handleChangeBase64RepresentativeImage,
     handleChangeUserName,
     handleChangeEmail,
     handleChangePassword,
@@ -28,10 +30,12 @@ export const RegisterUIContainer = () => {
 
   return (
     <RegisterUI
+      inputBase64RepresentativeImage={inputBase64RepresentativeImage}
       inputUserName={inputUserName}
       inputEmail={inputEmail}
       inputPassword={inputPassword}
       inputPasswordConfirmation={inputPasswordConfirmation}
+      handleChangeBase64RepresentativeImage={handleChangeBase64RepresentativeImage}
       handleChangeUserName={handleChangeUserName}
       handleChangeEmail={handleChangeEmail}
       handleChangePassword={handleChangePassword}
@@ -44,10 +48,12 @@ export const RegisterUIContainer = () => {
 };
 
 export const RegisterUI: React.FC<Props> = ({
+  inputBase64RepresentativeImage,
   inputUserName,
   inputEmail,
   inputPassword,
   inputPasswordConfirmation,
+  handleChangeBase64RepresentativeImage,
   handleChangeUserName,
   handleChangeEmail,
   handleChangePassword,
@@ -60,10 +66,12 @@ export const RegisterUI: React.FC<Props> = ({
     <div>
       <PagesHeader title="会員登録" onClick={routerBack} />
       <RegisterForm
+        inputBase64RepresentativeImage={inputBase64RepresentativeImage}
         inputUserName={inputUserName}
         inputEmail={inputEmail}
         inputPassword={inputPassword}
         inputPasswordConfirmation={inputPasswordConfirmation}
+        handleChangeBase64RepresentativeImage={handleChangeBase64RepresentativeImage}
         handleChangeUserName={handleChangeUserName}
         handleChangeEmail={handleChangeEmail}
         handleChangePassword={handleChangePassword}

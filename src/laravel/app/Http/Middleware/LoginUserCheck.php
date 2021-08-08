@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class LoginUserCheck
 {
     /**
@@ -17,8 +16,8 @@ class LoginUserCheck
         $loginId = Auth::id();
         $requestId = $request->user_id;
 
-        if($loginId != $requestId){
-            return response()->messageAndStatusCode('ユーザーが見つかりませんでした',404);
+        if ($loginId != $requestId) {
+            return response()->messageAndStatusCode('ユーザーが見つかりませんでした', 404);
         }
 
         return $next($request);
