@@ -15,7 +15,7 @@ function App({ Component, pageProps }) {
       autoHideDuration={3000}
     >
       <GlobalContextWrapper>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </GlobalContextWrapper>
     </SnackbarProvider>
   );
