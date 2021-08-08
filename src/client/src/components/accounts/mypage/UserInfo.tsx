@@ -1,21 +1,26 @@
 import React from 'react';
 import { TextInput } from 'src/components/common/TextInput';
+import { ImageInput } from 'src/components/common/ImageInput';
 import { Button } from 'src/components/common/Button';
 import { Validator } from 'src/hooks/accounts/mypage/index';
 
 type Props = {
+  base64RepresentativeImage: string;
   userName: string;
   email: string;
   validator: Validator;
+  handleChangeBase64RepresentativeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeUserName: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
   updateUserInfo: () => Promise<void>;
 };
 
 export const UserInfo: React.FC<Props> = ({
+  base64RepresentativeImage,
   userName,
   email,
   validator,
+  handleChangeBase64RepresentativeImage,
   handleChangeUserName,
   handleChangeEmail,
   updateUserInfo,
@@ -23,6 +28,7 @@ export const UserInfo: React.FC<Props> = ({
   return (
     <>
       <div className="w-7/12 mx-auto">
+        <ImageInput value={base64RepresentativeImage} onchange={handleChangeBase64RepresentativeImage} />
         <TextInput
           inputTitle={'ニックネーム'}
           placeholder={'ニックネームを入力'}

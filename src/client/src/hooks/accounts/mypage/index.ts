@@ -7,6 +7,7 @@ import { httpClient } from 'src/utils/httpClient';
 import { paths } from 'src/utils/paths';
 
 export type Validator = {
+  isValidBase64RepresentativeImage: () => boolean;
   isValidUserName: () => boolean;
   isValidEmail: () => boolean;
   canUserInfoUpdate: () => boolean;
@@ -18,6 +19,7 @@ export const useMypage = () => {
 
   const { token, userId } = useContext(globalContext);
 
+  const [base64RepresentativeImage, setBase64RepresentativeImage] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,11 +29,17 @@ export const useMypage = () => {
   const emailRegex = /[\w\d_-]+@[\w\d_-]+\.[\w\d._-]+/;
 
   const validator: Validator = {
+    isValidBase64RepresentativeImage: () => base64RepresentativeImage && base64RepresentativeImage.length > 0,
     isValidUserName: () => userName && userName.length > 0,
     isValidEmail: () => email && email.length > 0 && emailRegex.test(email),
     canUserInfoUpdate: () => validator.isValidUserName() && validator.isValidEmail(),
   };
 
+  const handleChangeBase64RepresentativeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const base64EncodedImage = Buffer.from(e.target.files[0]).toString('base64');
+    setBase64RepresentativeImage(base64EncodedImage);
+  };
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
@@ -56,6 +64,8 @@ export const useMypage = () => {
   const updateUserInfo = async () => {
     try {
       const data = {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        representative_image: base64RepresentativeImage,
         name: userName,
         email: email,
       };
@@ -77,10 +87,12 @@ export const useMypage = () => {
   }, [token, userId]);
 
   return {
+    base64RepresentativeImage,
     userName,
     email,
     loading,
     validator,
+    handleChangeBase64RepresentativeImage,
     handleChangeUserName,
     handleChangeEmail,
     getUserInfo,

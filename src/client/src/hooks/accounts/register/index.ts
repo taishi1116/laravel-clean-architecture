@@ -17,6 +17,7 @@ export const useRegister = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
+  const [inputBase64RepresentativeImage, setBase64RepresentativeImage] = useState<string | ArrayBuffer | null>(null);
   const [inputUserName, setInputUserName] = useState<string | null>(null);
   const [inputEmail, setInputEmail] = useState<string | null>(null);
   const [inputPassword, setInputPassword] = useState<string | null>(null);
@@ -25,14 +26,6 @@ export const useRegister = () => {
   const emailRegex = /[\w\d_-]+@[\w\d_-]+\.[\w\d._-]+/;
 
   const ENDPOINT = BASE_URL + '/user';
-
-  /* eslint-disable @typescript-eslint/camelcase */
-  const params = {
-    name: inputUserName,
-    email: inputEmail,
-    password: inputPassword,
-    password_confirmation: inputPasswordConfirmation,
-  };
 
   const validator: Validator = {
     hasInputUserName: () => inputUserName && inputUserName.length > 0,
@@ -47,6 +40,16 @@ export const useRegister = () => {
         validator.isMatchPassword()
       );
     },
+  };
+
+  const handleChangeBase64RepresentativeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setBase64RepresentativeImage(reader.result);
+    };
   };
 
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +67,19 @@ export const useRegister = () => {
 
   const postRegisterInfo = async () => {
     try {
+      const replaceInputBase64RepresentativeImage = inputBase64RepresentativeImage
+        .toString()
+        .replace(/data:.*\/.*;base64,/, '');
+
+      const params = {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        representative_image: replaceInputBase64RepresentativeImage,
+        name: inputUserName,
+        email: inputEmail,
+        password: inputPassword,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        password_confirmation: inputPasswordConfirmation,
+      };
       const res = await axios.post(ENDPOINT, params);
       if (res.status === 201) {
         router.push(paths.accounts.login);
@@ -77,10 +93,12 @@ export const useRegister = () => {
   };
 
   return {
+    inputBase64RepresentativeImage,
     inputUserName,
     inputEmail,
     inputPassword,
     inputPasswordConfirmation,
+    handleChangeBase64RepresentativeImage,
     handleChangeUserName,
     handleChangeEmail,
     handleChangePassword,

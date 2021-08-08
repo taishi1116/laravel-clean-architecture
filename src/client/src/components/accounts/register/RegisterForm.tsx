@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button } from 'src/components/common/Button';
+import { ImageInput } from 'src/components/common/ImageInput';
 import { TextInput } from 'src/components/common/TextInput';
 import { Validator } from 'src/hooks/accounts/register';
 
 type Props = {
+  inputBase64RepresentativeImage: string | ArrayBuffer;
   inputUserName: string;
   inputEmail: string;
   inputPassword: string;
   inputPasswordConfirmation: string;
+  handleChangeBase64RepresentativeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeUserName: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,10 +20,12 @@ type Props = {
 };
 
 export const RegisterForm: React.FC<Props> = ({
+  inputBase64RepresentativeImage,
   inputUserName,
   inputEmail,
   inputPassword,
   inputPasswordConfirmation,
+  handleChangeBase64RepresentativeImage,
   handleChangeUserName,
   handleChangeEmail,
   handleChangePassword,
@@ -31,6 +36,8 @@ export const RegisterForm: React.FC<Props> = ({
   return (
     <>
       <div className="w-7/12 mx-auto bg-white">
+        <ImageInput value={inputBase64RepresentativeImage} onchange={handleChangeBase64RepresentativeImage} />
+
         <TextInput
           inputTitle="ユーザネーム"
           placeholder="アルケミ"

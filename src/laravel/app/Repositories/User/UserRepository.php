@@ -19,7 +19,6 @@ class UserRepository implements UserInterface
             $hash_password = Hash::make($password);
             $decode_representative_image = base64_decode($base64_representative_image);
 
-
             $upload_image = Storage::disk('s3')->put('/test', $decode_representative_image, 'public');
             //S3へのファイルアップロード処理時の画像をurlに変換する
             $image_path = Storage::disk('s3')->url($upload_image);
@@ -29,7 +28,7 @@ class UserRepository implements UserInterface
             $user->save();
             return response()->json([], 201);
         } catch (Exception $e) {
-            return response()->json(['message' =>'会員登録に失敗しました。'], 500);
+            return response()->json(['message' => '会員登録に失敗しました。'], 500);
         }
     }
 
