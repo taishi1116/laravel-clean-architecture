@@ -64,7 +64,7 @@ class UserTest extends TestCase
         Storage::fake('photos');
         
         $password ='password';
-        $representative_image =UploadedFile::fake()->image("dummy.png");
+        $representative_image ="dGVzdC5qcGVn";
         $response = $this->postJson(
             '/api/user',
             ['name' =>'篠田 泰志','email' =>'test@example.com', 'representative_image' => $representative_image ,'password' =>$password,'password_confirmation' => $password]
@@ -113,7 +113,9 @@ class UserTest extends TestCase
         Storage::fake('photos');
 
         $user_id = 'fKgSWFm7wNHGWYO3rekV';
-        $representative_image =UploadedFile::fake()->image("dummy.png");
+        $representative_image ="dGVzdC5qcGVn";
+
+
         $response = $this->actingAs($this->user)->putJson(
             "/api/user/$user_id",
             ['name' =>'篠田 泰志','email' =>'test@example.com','representative_image' => $representative_image]

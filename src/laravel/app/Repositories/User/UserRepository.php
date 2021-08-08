@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class UserRepository implements UserInterface
 {
-    public function createUser(string $name, string $email, string $password, $representative_image)
+    public function createUser(string $name, string $email, string $password, $base64_representative_image)
     {
         try {
             $user_id = Str::uuid();
             $hash_password = Hash::make($password);
+            $decode_representative_image = base64_decode($base64_representative_image);
 
-            $upload_image = Storage::disk('s3')->put('/test', $representative_image, 'public');
+
+            $upload_image = Storage::disk('s3')->put('/test', $decode_representative_image, 'public');
             //S3へのファイルアップロード処理時の画像をurlに変換する
             $image_path = Storage::disk('s3')->url($upload_image);
             
@@ -39,17 +41,19 @@ class UserRepository implements UserInterface
         return response()->json(["name" => $name, "email" => $email], 200);
     }
 
-    public function updateUser(string $user_id, string $name, string $email, $representative_image)
+    public function updateUser(string $user_id, string $name, string $email, $base64_representative_image)
     {
         // findOrFailで見つからなかった場合自動で例外を投げてくれる
         $user = User::findOrFail($user_id);
         try {
+            $decode_representative_image = base64_decode($base64_representative_image);
+
 
             // 既存で保存してある画像を削除する
-            Storage::disk('s3')->delete($user->representative_image);
+            Storage::disk('s3')->delete($decode_representative_image);
 
 
-            $upload_image = Storage::disk('s3')->put('/test', $representative_image, 'public');
+            $upload_image = Storage::disk('s3')->put('/test', $base64_representative_image, 'public');
             //S3へのファイルアップロード処理時の画像をurlに変換する
             $image_path = Storage::disk('s3')->url($upload_image);
 

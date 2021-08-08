@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
         return [
             'name'=> 'required',
             'email' => 'required|email|unique:App\Models\User,email',
-            'representative_image' => 'required|image',
+            'representative_image' => 'required|string',
             'password' => 'required|min:8|confirmed',
             'password_confirmation'  => 'required|min:8',
         ];

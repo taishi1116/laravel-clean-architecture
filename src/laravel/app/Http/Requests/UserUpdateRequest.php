@@ -28,7 +28,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'name' =>'required',
             'email'  => 'required|email',
-            'representative_image' => 'required|image',
+            'representative_image' => 'required|string',
         ];
     }
 

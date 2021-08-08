@@ -9,9 +9,9 @@ interface UserInterface
         string $name,
         string $email,
         string $password,
-        $representative_image
+        string $base64_representative_image
     );
     public function findUser(Request $request);
-    public function updateUser(string $user_id, string $name, string $email, $representative_image);
+    public function updateUser(string $user_id, string $name, string $email, $base64_representative_image);
     public function deleteUser(string $user_id);
 }
