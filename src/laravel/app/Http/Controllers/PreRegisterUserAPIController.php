@@ -10,6 +10,8 @@ use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Aws\Ses\SesClient;
+use Aws\Exception\AwsException;
 
 // TODO リポジトリパターンで書き直す
 class PreRegisterUserAPIController extends Controller
@@ -25,24 +27,54 @@ class PreRegisterUserAPIController extends Controller
      */
     public function store(PreRegisterRequest $request)
     {
-        $mail_address = $request->input('email');
+        $to_mail = $request->input('email');
 
         $token = Str::uuid();
         $created_at = Carbon::now('Asia/Tokyo');
         $register_url = "http://localhost:3000/verify/token/$token";
 
+        $client = new SesClient([
+            'region' => env("AWS_DEFAULT_REGION"), // SESを設定しているリージョン
+            'version' => '2010-12-01',
+        ]);
+
+
+        // 送信元メールアドレス
+        // SESで設定したメールアドレス
+        // サンドボックス状態で検証しているので、SESに登録したメアドにしか送れない
+        $from_mail = env("MAIL_FROM_ADDRESS");
+        $char_set = 'UTF-8';
+        $subject = 'ブログサービス本登録リンクのお知らせ';
+        $body = "個人開発ブログサービスの本登録リンクです。$register_url";
+
 
         try {
-            $pre_register_user = PreRegisterUser::updateOrCreate(['mail' =>$mail_address], ['token' => $token,'created_at'=>$created_at]);
-        } catch (Exception $e) {
-            response()->json(['message' =>'仮会員登録に失敗しました。再度やり直してください。',400]);
-        }
+            $pre_register_user = PreRegisterUser::updateOrCreate(['mail' =>$to_mail], ['token' => $token,'created_at'=>$created_at]);
 
-        Mail::to($mail_address)->send(new PreRegisterUserMail($register_url));
-        if (count(Mail::failures()) > 0) {
+            $result = $client->sendEmail([
+                'Destination' => [
+                    'ToAddresses' => [$to_mail],
+                ],
+                'ReplyToAddresses' => [$from_mail],
+                'Source' => $from_mail,
+                'Message' => [
+                    'Body' => [
+                        'Text' => [
+                            'Charset' => $char_set,
+                            'Data' => $body,
+                        ],
+                    ],
+                    'Subject' => [
+                        'Charset' => $char_set,
+                        'Data' => $subject,
+                    ],
+                ],
+            ]);
+
+
+            return response()->json([], 201);
+        } catch (AwsException $e) {
             return response()->json(['message' =>'メールの送信に失敗しました。再度やり直してください。'], 400);
         }
-
-        return response()->json([], 201);
     }
 }
