@@ -5,7 +5,7 @@ import { Button } from 'src/components/common/Button';
 import { Validator } from 'src/hooks/accounts/mypage/index';
 
 type Props = {
-  base64RepresentativeImage: string;
+  base64RepresentativeImage: string | ArrayBuffer;
   userName: string;
   email: string;
   validator: Validator;

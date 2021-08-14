@@ -19,7 +19,7 @@ export const useMypage = () => {
 
   const { token, userId } = useContext(globalContext);
 
-  const [base64RepresentativeImage, setBase64RepresentativeImage] = useState<string | null>(null);
+  const [base64RepresentativeImage, setBase64RepresentativeImage] = useState<string | ArrayBuffer | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,7 +29,7 @@ export const useMypage = () => {
   const emailRegex = /[\w\d_-]+@[\w\d_-]+\.[\w\d._-]+/;
 
   const validator: Validator = {
-    isValidBase64RepresentativeImage: () => base64RepresentativeImage && base64RepresentativeImage.length > 0,
+    isValidBase64RepresentativeImage: () => base64RepresentativeImage != null,
     isValidUserName: () => userName && userName.length > 0,
     isValidEmail: () => email && email.length > 0 && emailRegex.test(email),
     canUserInfoUpdate: () => validator.isValidUserName() && validator.isValidEmail(),
@@ -37,9 +37,14 @@ export const useMypage = () => {
 
   const handleChangeBase64RepresentativeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-    const base64EncodedImage = Buffer.from(e.target.files[0]).toString('base64');
-    setBase64RepresentativeImage(base64EncodedImage);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setBase64RepresentativeImage(reader.result);
+    };
   };
+
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
@@ -63,9 +68,12 @@ export const useMypage = () => {
 
   const updateUserInfo = async () => {
     try {
+      const replaceInputBase64RepresentativeImage = base64RepresentativeImage
+        .toString()
+        .replace(/data:.*\/.*;base64,/, '');
       const data = {
         // eslint-disable-next-line @typescript-eslint/camelcase
-        representative_image: base64RepresentativeImage,
+        representative_image: replaceInputBase64RepresentativeImage,
         name: userName,
         email: email,
       };

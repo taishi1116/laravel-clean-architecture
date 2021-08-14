@@ -14,6 +14,9 @@ services:
       - 3000:3000
     # コンテナを立ち続けるようにする
     tty: true
+    # 自分の現在のディレクトリをコンテナ内の/app/nextに紐付け
+    volumes:
+      - ./src/client:/usr/src/client
     # コンテナ立ち上げ時に実行するコマンドを記載(localhostの立ち上げをしている)
     command: "yarn dev"
   laravel:
