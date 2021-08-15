@@ -59,6 +59,7 @@ export const useMypage = () => {
       if (res.status === 200) {
         setUserName(res.data.name);
         setEmail(res.data.email);
+        setBase64RepresentativeImage(res.data.representative_image);
         setLoading(false);
       }
     } catch (e) {
