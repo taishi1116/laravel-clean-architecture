@@ -19,25 +19,27 @@ class UserRepository implements UserInterface
             $hash_password = Hash::make($password);
             $decode_representative_image = base64_decode($base64_representative_image);
 
-            $upload_image = Storage::disk('s3')->put('/test', $decode_representative_image, 'public');
-            //S3へのファイルアップロード処理時の画像をurlに変換する
-            $image_path = Storage::disk('s3')->url($upload_image);
+            $s3_image_path_name = "user/".$user_id;
+
+            Storage::disk('s3')->put($s3_image_path_name, $decode_representative_image, 'public');
+            $s3_image_path_url = Storage::disk('s3')->url($s3_image_path_name);
             
             $user = new User();
-            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password, "representative_image" => $image_path]);
+            $user->fill(['user_id'=> $user_id , 'name' => $name ,'email' => $email , 'password' => $hash_password, "representative_image" => $s3_image_path_url]);
             $user->save();
             return response()->json([], 201);
         } catch (Exception $e) {
-            return response()->json(['message' => '会員登録に失敗しました。'], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
     public function findUser(Request $request)
     {
         $name = $request->user()->name;
-        $email =Crypt::encrypt($request->user()->email);
+        $email =$request->user()->email;
+        $representative_image =$request->user()->representative_image;
     
-        return response()->json(["name" => $name, "email" => $email], 200);
+        return response()->json(["name" => $name, "email" => $email,"representative_image" => $representative_image], 200);
     }
 
     public function updateUser(string $user_id, string $name, string $email, $base64_representative_image)
@@ -46,21 +48,15 @@ class UserRepository implements UserInterface
         $user = User::findOrFail($user_id);
         try {
             $decode_representative_image = base64_decode($base64_representative_image);
+            
+            $s3_image_path_name ="user/".$user_id;
 
-
-            // 既存で保存してある画像を削除する
-            Storage::disk('s3')->delete($decode_representative_image);
-
-
-            $upload_image = Storage::disk('s3')->put('/test', $base64_representative_image, 'public');
-            //S3へのファイルアップロード処理時の画像をurlに変換する
-            $image_path = Storage::disk('s3')->url($upload_image);
-
-            $crypt_email = Crypt::encrypt($email);
+            Storage::disk('s3')->put($s3_image_path_name, $decode_representative_image, 'public');
+            $s3_image_path_url = Storage::disk('s3')->url($s3_image_path_name);
             
             $user->name = $name;
-            $user->email = $crypt_email;
-            $user->representative_image = $image_path;
+            $user->email = $email;
+            $user->representative_image = $s3_image_path_url;
             
             // update_atは自動更新される
             $user->save();
@@ -72,6 +68,7 @@ class UserRepository implements UserInterface
     }
 
     // 論理削除(ソフトデリート対応)
+    // TODO s3の画像は残しておくか検討
     public function deleteUser(string $user_id)
     {
         $user = User::findOrFail($user_id);
