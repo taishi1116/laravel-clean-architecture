@@ -6,6 +6,7 @@ import { paths } from 'src/utils/paths';
 import { useSnackbar } from 'notistack';
 
 export type Validator = {
+  hasInputBase64RepresentativeImage: () => boolean;
   hasInputUserName: () => boolean;
   hasInputEmail: () => boolean;
   hasInputPassword: () => boolean;
@@ -28,12 +29,14 @@ export const useRegister = () => {
   const ENDPOINT = BASE_URL + '/user';
 
   const validator: Validator = {
+    hasInputBase64RepresentativeImage: () => inputBase64RepresentativeImage != null,
     hasInputUserName: () => inputUserName && inputUserName.length > 0,
     hasInputEmail: () => inputEmail && inputEmail.length > 0 && emailRegex.test(inputEmail),
     hasInputPassword: () => inputPassword && inputPassword.length > 7,
     isMatchPassword: () => inputPassword && inputPassword === inputPasswordConfirmation,
     canRegister: () => {
       return (
+        validator.hasInputBase64RepresentativeImage() &&
         validator.hasInputUserName() &&
         validator.hasInputEmail() &&
         validator.hasInputPassword() &&
