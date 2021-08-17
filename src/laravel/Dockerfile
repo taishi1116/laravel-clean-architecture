@@ -1,4 +1,6 @@
 FROM php:7.4-fpm-alpine
+WORKDIR /var/www/html
+
 
 # composer install
 COPY --from=composer /usr/bin/composer /usr/bin/composer
