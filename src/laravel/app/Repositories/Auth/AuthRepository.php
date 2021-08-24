@@ -21,11 +21,9 @@ class AuthRepository implements AuthInterface
                 $user->tokens()->where('name', $user->name)->delete();
             }
             // トークン生成
-            // $user->token = $user->createToken("test")->plainTextToken;
             $user->token = $user->createToken($user->name)->plainTextToken;
             
             return response()->json(['user' => $user], 200);
-        }
 
         return response()->messageAndStatusCode('ユーザーが見つかりません。', 404);
     }
