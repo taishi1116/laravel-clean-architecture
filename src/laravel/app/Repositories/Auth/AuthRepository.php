@@ -25,6 +25,7 @@ class AuthRepository implements AuthInterface
             
             return response()->json(['user' => $user], 200);
 
-        return response()->messageAndStatusCode('ユーザーが見つかりません。', 404);
+            return response()->messageAndStatusCode('ユーザーが見つかりません。', 404);
+        }
     }
 }

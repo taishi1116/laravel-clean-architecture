@@ -12,7 +12,7 @@ export const ArticleItem = ({ articleId, postTitle, postContent }: Props) => {
   return (
     <div className={'wrapper mb-5'} onClick={() => router.push(`${paths.articles.default}/${articleId}`)}>
       <div className={'text-lg font-bold mb-3'}>{postTitle}</div>
-      <div className={'truncate'}>{postContent}</div>
+      <div className={'whitespace-pre'}>{postContent}</div>
       <style jsx>
         {`
           .wrapper {
