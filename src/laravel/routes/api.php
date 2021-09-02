@@ -27,12 +27,6 @@ use App\Models\Article;
 
 Route::get('test', [TestAPIController::class,"index"]);
 
-//仮会員登録
-Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']);
-
-// 仮会員登録のtoken確認
-Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
-
 
 // 記事
 Route::get('/articles', [ArticleAPIController::class, 'index']);
@@ -42,10 +36,22 @@ Route::put('/articles/{article_id}', [ArticleAPIController::class, 'update'])->m
 Route::delete('/articles/{article_id}', [ArticleAPIController::class, 'destroy'])->middleware('auth:sanctum', 'loginUserCheck', 'can:delete,article_id');
 // 認証
 Route::post('/login', [AuthAPIController::class, 'login']);
-Route::post('/logout', [AuthAPIController::class, 'logout']);
 
 // 会員情報
 Route::post('/user', [UserAPIController::class, 'store']);
 Route::get('/user/{user_id}', [UserAPIController::class, 'show'])->middleware('auth:sanctum', 'loginUserCheck');
 Route::put('/user/{user_id}', [UserAPIController::class, 'update'])->middleware('auth:sanctum', 'loginUserCheck');
 Route::delete('/user/{user_id}', [UserAPIController::class, 'destroy'])->middleware('auth:sanctum', 'loginUserCheck');
+
+
+
+/**
+ * カリキュラムでは下記APIは不採用
+ */
+
+//仮会員登録
+// Route::post('/user/pre_register', [PreRegisterUserAPIController::class, 'store']);
+// 仮会員登録のtoken確認
+// Route::get('/verify/{token}', [VerifyTokenController::class, 'index']);
+// token認証のためログアウトはフロントで実施
+// Route::post('/logout', [AuthAPIController::class, 'logout']);
