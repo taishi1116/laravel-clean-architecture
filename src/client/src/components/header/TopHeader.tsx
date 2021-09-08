@@ -38,7 +38,7 @@ export const TopHeader: React.FC = () => {
                 <button
                   className="my-auto	lg:mx-0 mr-3"
                   onClick={() => {
-                    router.push(`${paths.accounts.preRegister.index}`);
+                    router.push(`${paths.accounts.register}`);
                   }}
                 >
                   会員登録
