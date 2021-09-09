@@ -3,6 +3,7 @@
 namespace App\Repositories\Article;
 
 use App\Models\Article;
+use App\Models\User;
 use \Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,7 +19,8 @@ class ArticleRepository implements ArticleInterface
     public function getArticleDetail($article_id)
     {
         $article = Article::findOrFail($article_id);
-        return $article;
+        $poster_user = User::findOrFail($article->user_id);
+        return ["article_id" =>$article->article_id,"title" => $article->title,"content" => $article->content,"user_name" =>$poster_user->name,"created_at" =>$article->created_at,"updated_at" =>$article->updated_at,"deleted_at" =>$article->deleted_at];
     }
 
 

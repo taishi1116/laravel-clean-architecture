@@ -26,8 +26,7 @@ class ArticleAPIController extends Controller
     public function show($article_id)
     {
         try {
-            $article =  $this->article_repository->getArticleDetail($article_id);
-            $response = ['title' => $article->title,'content' => $article->content,'created_at' => $article->created_at,'updated_at' => $article->created_at];
+            $response =  $this->article_repository->getArticleDetail($article_id);
             return response()->json($response, 200);
         } catch (Exception $e) {
             return response()->messageAndStatusCode('記事が存在しません', 404);
